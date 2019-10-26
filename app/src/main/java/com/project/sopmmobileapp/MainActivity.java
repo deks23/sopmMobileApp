@@ -79,4 +79,13 @@ public class MainActivity extends AppCompatActivity {
     private void clearBackStack() {
         while (super.getSupportFragmentManager().popBackStackImmediate()) ;
     }
+
+    public void putFragment(final Fragment fragment){
+        super.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_on_fragments,fragment)
+                .attach(fragment)
+                .commit();
+        this.currentFragment = fragment;
+    }
 }

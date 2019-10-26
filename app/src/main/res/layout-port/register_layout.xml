@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="credentials"
-            type="com.project.sopmmobileapp.model.dtos.Credentials" />
+            name="registerCredentials"
+            type="com.project.sopmmobileapp.model.dtos.RegisterCredentials" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="10dp"
@@ -55,7 +55,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={credentials.username}"
+                        android:text="@={registerCredentials.username}"
                         android:textSize="24sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -72,19 +72,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="@={credentials.password}"
+                        android:text="@={registerCredentials.password}"
                         android:textSize="24sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:id="@+id/login_button"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:padding="10dp"
-                    android:text="@string/login"
-                    android:textSize="20sp" />
+                    android:hint="@string/enter_repeated_password_msg"
+                    android:textSize="24sp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:text="@={registerCredentials.repeatPassword}"
+                        android:textSize="24sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/sign_button"
@@ -92,7 +99,16 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:padding="10dp"
-                    android:text="@string/go_to_registration"
+                    android:text="@string/sign_in"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/login_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:padding="10dp"
+                    android:text="@string/go_to_login"
                     android:textSize="20sp" />
 
             </LinearLayout>

@@ -1,5 +1,7 @@
 package com.project.sopmmobileapp.model.dtos;
 
+import androidx.databinding.BaseObservable;
+
 import com.google.gson.annotations.SerializedName;
 
 import lombok.AllArgsConstructor;
@@ -9,11 +11,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class BaseResponse {
+public class LoginResponse extends BaseObservable {
 
-    @SerializedName("status")
-    private boolean status;
+    @SerializedName("username")
+    private String username;
 
-    @SerializedName("responseMesage")
-    private String responseMessage;
+    @SerializedName("jwt")
+    private String token;
 }

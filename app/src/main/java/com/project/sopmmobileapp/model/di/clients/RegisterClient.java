@@ -1,4 +1,45 @@
 package com.project.sopmmobileapp.model.di.clients;
 
-public class RegisterClient {
+import com.project.sopmmobileapp.applications.VoteApplication;
+import com.project.sopmmobileapp.model.daos.RegisterDao;
+import com.project.sopmmobileapp.model.dtos.BaseResponse;
+import com.project.sopmmobileapp.model.dtos.Credentials;
+import com.project.sopmmobileapp.model.exceptions.UserIsTakenException;
+
+import java.net.HttpURLConnection;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import io.reactivex.Single;
+import retrofit2.Retrofit;
+
+import static io.reactivex.Single.error;
+import static io.reactivex.Single.just;
+
+public class RegisterClient extends BaseClient {
+
+    @Named("no_auth")
+    @Inject
+    Retrofit retrofit;
+
+    private RegisterDao registerDao;
+
+    public RegisterClient() {
+        VoteApplication.getRetrofitComponent().inject(this);
+        this.registerDao = retrofit.create(RegisterDao.class);
+    }
+
+    public Single<BaseResponse> register(final Credentials credentials) {
+        return async(this.registerDao.register(credentials)
+                .flatMap(authenticationResponse -> {
+                    if (authenticationResponse.isSuccessful()) {
+                        return just(authenticationResponse.body());
+                    }
+                    if(authenticationResponse.code() == HttpURLConnection.HTTP_UNAUTHORIZED){
+                        return  error(new UserIsTakenException());
+                    }
+                    return error(new RuntimeException(authenticationResponse.errorBody().toString()));
+                }));
+    }
 }

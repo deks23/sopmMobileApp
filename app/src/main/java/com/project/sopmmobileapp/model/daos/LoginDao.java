@@ -2,6 +2,7 @@ package com.project.sopmmobileapp.model.daos;
 
 import com.project.sopmmobileapp.model.dtos.BaseResponse;
 import com.project.sopmmobileapp.model.dtos.Credentials;
+import com.project.sopmmobileapp.model.dtos.LoginResponse;
 
 import java.util.List;
 import java.util.Observable;
@@ -18,6 +19,6 @@ public interface LoginDao {
     String LOGIN_PATH = BASE_USER_PATH + "/login";
 
     @POST(LOGIN_PATH)
-    Single<Response<BaseResponse>> login(@Body Credentials credentials);
+    Single<Response<LoginResponse>> login(@Body Credentials credentials);
 
 }
