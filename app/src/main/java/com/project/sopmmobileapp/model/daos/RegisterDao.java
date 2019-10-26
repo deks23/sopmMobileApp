@@ -11,9 +11,6 @@ public interface RegisterDao {
     String REGISTER_PATH = BASE_USER_PATH + "/register";
 
     @POST(REGISTER_PATH)
-    Call<BaseResponse> register();
-
-    @POST(REGISTER_PATH)
     Call<BaseResponse> register(Credentials credentials);
 
 }
