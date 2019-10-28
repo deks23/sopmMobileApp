@@ -18,13 +18,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class RetrofitModule {
 
-    //TODO WAITING ON ONLINE SERVER BASE URL
-//  private static final String BASE_URL = "https://sopmr-webservices.azurewebsites.net";
-    // NAGROK ALOW CREATE ON 8H SERVER PROXY FOR YOUR LOCAL SERVER AND APPLICATION
-    // REQUEST WAY   ANDROID APP -> INTERNET ( NAGROK PROXY SERVER ) -> LOCAL SERVER
+//  NAGROK ALOW CREATE ON 8H SERVER PROXY FOR YOUR LOCAL SERVER AND APPLICATION
+//  REQUEST WAY   ANDROID APP -> INTERNET ( NAGROK PROXY SERVER ) -> LOCAL SERVER
+//  ON COMMAND nagrok http 8080 COPY URL WITH HTTPS AND PAST URL BELOW
 
-    // ON COMMAND nagrok http 8080 COPY URL WITH HTTPS AND PAST URL BELOW
-    private static final String BASE_URL = "https://494a25b8.ngrok.io";
+//  BASE URL TO APPLICATION ON HEROKU
+    private static final String BASE_URL = "https://salty-inlet-81516.herokuapp.com";
 
     @Provides
     @Singleton
