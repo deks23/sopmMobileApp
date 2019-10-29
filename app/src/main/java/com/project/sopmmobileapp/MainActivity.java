@@ -1,8 +1,6 @@
 package com.project.sopmmobileapp;
 
 import android.Manifest;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 
@@ -22,16 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment currentFragment;
 
-    private LocationManager locationManager;
-    private LocationListener listener;
-    private double longitude = 0.0;
-    private double latitude = 0.0;
-
     private void initGpsModule() {
         ActivityCompat.requestPermissions(MainActivity.this, new String[]
                 {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
         Gps gt = new Gps(getApplicationContext());
-        gt.getLocation();
     }
 
     @Override
