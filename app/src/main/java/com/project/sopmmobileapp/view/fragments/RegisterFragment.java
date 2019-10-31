@@ -22,7 +22,6 @@ import com.project.sopmmobileapp.model.di.clients.RegisterClient;
 import com.project.sopmmobileapp.model.dtos.BaseResponse;
 import com.project.sopmmobileapp.model.dtos.RegisterCredentials;
 import com.project.sopmmobileapp.model.exceptions.BadRequestException;
-import com.project.sopmmobileapp.model.exceptions.LoginException;
 import com.project.sopmmobileapp.model.exceptions.UserIsTakenException;
 import com.project.sopmmobileapp.model.validators.PasswordValidator;
 
@@ -107,9 +106,5 @@ public class RegisterFragment extends Fragment {
         }else{
             this.errorMessage.setText(getString(PasswordValidator.getErrorMessageCode()));
         }
-    }
-    @OnClick(R.id.login_button)
-    void gotToLoginFragment(){
-        ((MainActivity) getActivity()).putFragment(new LoginFragment());
     }
 }

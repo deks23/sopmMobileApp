@@ -8,6 +8,7 @@ import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.model.exceptions.LoginException;
 
 import java.net.HttpURLConnection;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,15 +36,15 @@ public class LoginClient extends BaseClient {
         return async(this.loginDao.login(credentials)
                 .flatMap(authenticationResponse -> {
                     if (authenticationResponse.isSuccessful()) {
-                        return just(authenticationResponse.body());
+                        return just(Objects.requireNonNull(authenticationResponse.body()));
                     }
-                    if(authenticationResponse.code() == HttpURLConnection.HTTP_UNAUTHORIZED){
+                    if (authenticationResponse.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                         return error((new LoginException()));
                     }
-                    if(authenticationResponse.code() == HttpURLConnection.HTTP_NOT_FOUND){
-                        return  error(new BadRequestException());
+                    if (authenticationResponse.code() == HttpURLConnection.HTTP_NOT_FOUND) {
+                        return error(new BadRequestException());
                     }
-                    return error(new RuntimeException(authenticationResponse.errorBody().toString()));
+                    return error(new RuntimeException(Objects.requireNonNull(authenticationResponse.errorBody()).toString()));
                 }));
     }
 }

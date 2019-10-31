@@ -1,36 +1,37 @@
 package com.project.sopmmobileapp;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.project.sopmmobileapp.view.fragments.LoginFragment;
 
 import org.jetbrains.annotations.NotNull;
 
+import butterknife.BindView;
+import lombok.Getter;
+
+@Getter
 public class MainActivity extends AppCompatActivity {
 
 
     private static final String TAG = MainActivity.class.getName();
     private static final String CURRENT_FRAGMENT_TAG = "currentFragment";
 
+    public static MainActivity instance = null;
+
     private Fragment currentFragment;
 
-    private void initGpsModule() {
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]
-                {Manifest.permission.ACCESS_FINE_LOCATION}, 123);
-        Gps gt = new Gps(getApplicationContext());
-    }
+    @BindView(R.id.layout_on_fragments)
+    public FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initGpsModule();
 
         if (savedInstanceState != null) {
             currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, CURRENT_FRAGMENT_TAG);
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             this.changeFragment(this.currentFragment);
         }
         this.setSdkPolicy();
+        instance = this;
     }
 
     @Override
@@ -97,6 +99,18 @@ public class MainActivity extends AppCompatActivity {
                 .attach(fragment)
                 .commit();
         this.currentFragment = fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        instance = this;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        instance = null;
     }
 
 }

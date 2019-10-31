@@ -18,6 +18,7 @@ import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.LoginFragmentBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
+import com.project.sopmmobileapp.model.di.clients.GpsClient;
 import com.project.sopmmobileapp.model.di.clients.LoginClient;
 import com.project.sopmmobileapp.model.dtos.Credentials;
 import com.project.sopmmobileapp.model.dtos.LoginResponse;
@@ -28,6 +29,8 @@ import com.project.sopmmobileapp.model.store.TokenStore;
 import com.project.sopmmobileapp.model.validators.PasswordValidator;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -45,13 +48,16 @@ public class LoginFragment extends Fragment {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private static final String LOGIN_SUCCESSFUL_MESSAGE ="Login is successful";
+    private static final String LOGIN_SUCCESSFUL_MESSAGE = "Login is successful";
 
     @BindView(R.id.error_message)
     TextView errorMessage;
 
     @Inject
     LoginClient loginClient;
+
+    @Inject
+    GpsClient gpsClient;
 
     @State(ABundler.class)
     Credentials credentials = new Credentials();
@@ -67,11 +73,11 @@ public class LoginFragment extends Fragment {
 
         LoginFragmentBinding loginFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.login_fragment,
                 container, false);
-        loginFragmentBinding.setCredentials(this.credentials);
         View mainView = loginFragmentBinding.getRoot();
+        loginFragmentBinding.setCredentials(this.credentials);
         ButterKnife.bind(this, mainView);
-        VoteApplication.getClientsComponent().inject(this);
 
+        VoteApplication.getClientsComponent().inject(this);
         return mainView;
     }
 
@@ -84,33 +90,35 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.login_button)
     void login() {
-        if(PasswordValidator.valid(this.credentials)) {
+        if (PasswordValidator.valid(this.credentials)) {
             Disposable disposable = this.loginClient.login(this.credentials)
                     .subscribe((LoginResponse authenticationResponse) -> {
                         Log.i(TAG, "Logged in");
-                TokenStore.saveToken(authenticationResponse.getToken());
-                   CredentialsStore.saveCredentials(this.credentials);
-                        Toast.makeText(this.getContext(),LOGIN_SUCCESSFUL_MESSAGE,
+
+
+                        TokenStore.saveToken(authenticationResponse.getToken());
+                        CredentialsStore.saveCredentials(this.credentials);
+                        Toast.makeText(this.getContext(), LOGIN_SUCCESSFUL_MESSAGE,
                                 Toast.LENGTH_SHORT).show();
 //                   ((MainActivity) getActivity()).setBaseForBackStack(new MainViewPagerFragment());
                     }, (Throwable e) -> {
                         if (e instanceof LoginException) {
                             Log.i(TAG, "LoginException", e);
                             this.errorMessage.setText(getString(R.string.login_error));
-                        } else if(e instanceof BadRequestException){
+                        } else if (e instanceof BadRequestException) {
                             Log.i(TAG, "Server error", e);
                             this.errorMessage.setText(getString(R.string.server_error));
                         }
                     });
 
             this.compositeDisposable.add(disposable);
-        }else{
+        } else {
             this.errorMessage.setText(getString(PasswordValidator.getErrorMessageCode()));
         }
     }
 
     @OnClick(R.id.sign_button)
-    void goOnRegisterFragment(){
-        ((MainActivity) getActivity()).putFragment(new RegisterFragment());
+    void goOnRegisterFragment() {
+        ((MainActivity) Objects.requireNonNull(getActivity())).putFragment(new RegisterFragment());
     }
 }

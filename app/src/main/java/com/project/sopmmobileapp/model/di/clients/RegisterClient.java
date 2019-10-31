@@ -7,6 +7,7 @@ import com.project.sopmmobileapp.model.dtos.Credentials;
 import com.project.sopmmobileapp.model.exceptions.UserIsTakenException;
 
 import java.net.HttpURLConnection;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,12 +35,12 @@ public class RegisterClient extends BaseClient {
         return async(this.registerDao.register(credentials)
                 .flatMap(authenticationResponse -> {
                     if (authenticationResponse.isSuccessful()) {
-                        return just(authenticationResponse.body());
+                        return just(Objects.requireNonNull(authenticationResponse.body()));
                     }
-                    if(authenticationResponse.code() == HttpURLConnection.HTTP_UNAUTHORIZED){
-                        return  error(new UserIsTakenException());
+                    if (authenticationResponse.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        return error(new UserIsTakenException());
                     }
-                    return error(new RuntimeException(authenticationResponse.errorBody().toString()));
+                    return error(new RuntimeException(Objects.requireNonNull(authenticationResponse.errorBody()).toString()));
                 }));
     }
 }

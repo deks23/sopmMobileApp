@@ -102,15 +102,6 @@
                     android:text="@string/sign_in"
                     android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/login_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:padding="10dp"
-                    android:text="@string/go_to_login"
-                    android:textSize="20sp" />
-
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

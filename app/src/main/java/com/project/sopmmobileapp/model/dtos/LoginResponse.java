@@ -13,9 +13,18 @@ import lombok.ToString;
 @ToString
 public class LoginResponse extends BaseObservable {
 
+
     @SerializedName("username")
     private String username;
 
     @SerializedName("jwt")
     private String token;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getToken() {
+        return token;
+    }
 }

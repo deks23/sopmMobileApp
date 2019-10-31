@@ -112,16 +112,6 @@
                         android:padding="10dp"
                         android:text="@string/sign_in"
                         android:textSize="20sp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/login_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:text="@string/go_to_login"
-                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
