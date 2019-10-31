@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.view.fragments.LoginFragment;
@@ -23,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String CURRENT_FRAGMENT_TAG = "currentFragment";
 
     public static MainActivity instance = null;
-
     private Fragment currentFragment;
 
     @BindView(R.id.layout_on_fragments)
@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if (savedInstanceState != null) {
-            currentFragment = getSupportFragmentManager().getFragment(savedInstanceState, CURRENT_FRAGMENT_TAG);
+            currentFragment = getSupportFragmentManager().
+                    getFragment(savedInstanceState, CURRENT_FRAGMENT_TAG);
         } else {
             this.currentFragment = new LoginFragment();
-            this.changeFragment(this.currentFragment);
+            this.setBaseForBackStack(this.currentFragment, TAG);
         }
         this.setSdkPolicy();
         instance = this;
@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        getSupportFragmentManager().putFragment(outState, CURRENT_FRAGMENT_TAG, currentFragment);
+        getSupportFragmentManager().putFragment(outState,
+                CURRENT_FRAGMENT_TAG,
+                currentFragment);
     }
 
     private void setSdkPolicy() {
@@ -58,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (this.canBack()) {
-            super.getSupportFragmentManager().popBackStackImmediate();
+        if (canBack()) {
+            super.getSupportFragmentManager().popBackStack();
         }
     }
 
@@ -67,38 +69,32 @@ public class MainActivity extends AppCompatActivity {
         return super.getSupportFragmentManager().getBackStackEntryCount() > 1;
     }
 
-    public void changeFragment(final Fragment fragment) {
+    public void setBaseForBackStack(final Fragment fragment, String TAG) {
         super.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_on_fragments, fragment)
-                .addToBackStack(currentFragment.getClass().toString())
+                .addToBackStack(TAG)
                 .commit();
-
         this.currentFragment = fragment;
-    }
 
-    public void setBaseForBackStack(final Fragment fragment) {
-        this.clearBackStack();
-
-        super.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layout_on_fragments, fragment)
-                .addToBackStack(currentFragment.getClass().toString())
-                .commit();
-
-        this.currentFragment = fragment;
     }
 
     private void clearBackStack() {
-        while (super.getSupportFragmentManager().popBackStackImmediate()) ;
+        while (super.getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            super.getSupportFragmentManager().popBackStackImmediate();
+        }
     }
 
-    public void putFragment(final Fragment fragment) {
-        super.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layout_on_fragments, fragment)
-                .attach(fragment)
-                .commit();
+    public void putFragment(final Fragment fragment, final String TAG) {
+        FragmentTransaction ft = super.getSupportFragmentManager().beginTransaction();
+        ft.detach(currentFragment);
+        if (fragment.isAdded()) {
+            ft.show(fragment);
+        } else {
+            ft.replace(R.id.layout_on_fragments, fragment, TAG);
+            ft.addToBackStack(TAG);
+            ft.commit();
+        }
         this.currentFragment = fragment;
     }
 

@@ -1,0 +1,9 @@
+package com.project.sopmmobileapp.view.fragments;
+
+public interface FragmentTags {
+
+    String LoginFragment = "LOGIN_FRAGMENT";
+    String RegisterFragment = "REGISTER_FRAGMENT";
+    String UserDetailsFragment = "USER_DETAILS_FRAGMENT";
+    String MainViewPagerFragment = "MAIN_VIEW_PAGER_FRAGMENT";
+}

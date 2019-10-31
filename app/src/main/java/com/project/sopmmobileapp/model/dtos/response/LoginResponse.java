@@ -11,6 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
+//TODO CHANGE SERVE REQUES ABOUT SIDE OF SERVER
 public class LoginResponse extends BaseObservable {
 
 
@@ -20,11 +21,22 @@ public class LoginResponse extends BaseObservable {
     @SerializedName("jwt")
     private String token;
 
+    @SerializedName("needData")
+    private boolean needData;
+
     public String getUsername() {
         return username;
     }
 
     public String getToken() {
         return token;
+    }
+
+    public boolean isNeedData() {
+        return needData;
+    }
+
+    public void setNeedData(boolean needData) {
+        this.needData = needData;
     }
 }
