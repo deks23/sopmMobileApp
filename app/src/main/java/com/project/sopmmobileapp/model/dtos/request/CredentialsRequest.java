@@ -1,4 +1,4 @@
-package com.project.sopmmobileapp.model.dtos;
+package com.project.sopmmobileapp.model.dtos.request;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -6,21 +6,27 @@ import androidx.databinding.library.baseAdapters.BR;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RegisterCredentials extends BaseObservable {
+import org.parceler.Parcel;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@Parcel
+public class CredentialsRequest extends BaseObservable {
 
     @SerializedName("username")
-    String username;
+     String username;
 
     @SerializedName("password")
-    String password;
+     String password;
 
-    @SerializedName("repeatPassword")
-    String repeatPassword;
-
-    public RegisterCredentials() {
+    public CredentialsRequest() {
         username = "";
         password = "";
-        repeatPassword = "";
     }
 
     @Bindable
@@ -41,15 +47,5 @@ public class RegisterCredentials extends BaseObservable {
     public void setPassword(String password) {
         this.password = password;
         notifyPropertyChanged(BR.password);
-    }
-
-    @Bindable
-    public String getRepeatPassword() {
-        return repeatPassword;
-    }
-
-    public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
-        notifyPropertyChanged(BR.repeatPassword);
     }
 }

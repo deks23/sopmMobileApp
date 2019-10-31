@@ -1,4 +1,4 @@
-package com.project.sopmmobileapp;
+package com.project.sopmmobileapp.view.activities;
 
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.view.fragments.LoginFragment;
 
 import org.jetbrains.annotations.NotNull;

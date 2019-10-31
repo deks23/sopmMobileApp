@@ -13,20 +13,20 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.project.sopmmobileapp.MainActivity;
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.LoginFragmentBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.GpsClient;
 import com.project.sopmmobileapp.model.di.clients.LoginClient;
-import com.project.sopmmobileapp.model.dtos.Credentials;
-import com.project.sopmmobileapp.model.dtos.LoginResponse;
+import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
+import com.project.sopmmobileapp.model.dtos.response.LoginResponse;
 import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.model.exceptions.LoginException;
 import com.project.sopmmobileapp.model.store.CredentialsStore;
 import com.project.sopmmobileapp.model.store.TokenStore;
 import com.project.sopmmobileapp.model.validators.PasswordValidator;
+import com.project.sopmmobileapp.view.activities.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment {
     GpsClient gpsClient;
 
     @State(ABundler.class)
-    Credentials credentials = new Credentials();
+    CredentialsRequest credentialsRequest = new CredentialsRequest();
 
 
     @Nullable
@@ -74,7 +74,7 @@ public class LoginFragment extends Fragment {
         LoginFragmentBinding loginFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.login_fragment,
                 container, false);
         View mainView = loginFragmentBinding.getRoot();
-        loginFragmentBinding.setCredentials(this.credentials);
+        loginFragmentBinding.setCredentialsRequest(this.credentialsRequest);
         ButterKnife.bind(this, mainView);
 
         VoteApplication.getClientsComponent().inject(this);
@@ -90,14 +90,14 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.login_button)
     void login() {
-        if (PasswordValidator.valid(this.credentials)) {
-            Disposable disposable = this.loginClient.login(this.credentials)
+        if (PasswordValidator.valid(this.credentialsRequest)) {
+            Disposable disposable = this.loginClient.login(this.credentialsRequest)
                     .subscribe((LoginResponse authenticationResponse) -> {
                         Log.i(TAG, "Logged in");
 
 
                         TokenStore.saveToken(authenticationResponse.getToken());
-                        CredentialsStore.saveCredentials(this.credentials);
+                        CredentialsStore.saveCredentials(this.credentialsRequest);
                         Toast.makeText(this.getContext(), LOGIN_SUCCESSFUL_MESSAGE,
                                 Toast.LENGTH_SHORT).show();
 //                   ((MainActivity) getActivity()).setBaseForBackStack(new MainViewPagerFragment());

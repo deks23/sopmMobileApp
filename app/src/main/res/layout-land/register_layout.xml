@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="registerCredentials"
-            type="com.project.sopmmobileapp.model.dtos.RegisterCredentials" />
+            name="registerCredentialsRequest"
+            type="com.project.sopmmobileapp.model.dtos.request.RegisterCredentialsRequest" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,7 +57,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={registerCredentials.username}"
+                        android:text="@={registerCredentialsRequest.username}"
                         android:textSize="24sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="@={registerCredentials.password}"
+                        android:text="@={registerCredentialsRequest.password}"
                         android:textSize="24sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -91,7 +91,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="@={registerCredentials.repeatPassword}"
+                        android:text="@={registerCredentialsRequest.repeatPassword}"
                         android:textSize="24sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>

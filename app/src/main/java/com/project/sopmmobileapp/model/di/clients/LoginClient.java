@@ -2,8 +2,8 @@ package com.project.sopmmobileapp.model.di.clients;
 
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.model.daos.LoginDao;
-import com.project.sopmmobileapp.model.dtos.Credentials;
-import com.project.sopmmobileapp.model.dtos.LoginResponse;
+import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
+import com.project.sopmmobileapp.model.dtos.response.LoginResponse;
 import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.model.exceptions.LoginException;
 
@@ -32,8 +32,8 @@ public class LoginClient extends BaseClient {
         this.loginDao = retrofit.create(LoginDao.class);
     }
 
-    public Single<LoginResponse> login(final Credentials credentials) {
-        return async(this.loginDao.login(credentials)
+    public Single<LoginResponse> login(final CredentialsRequest credentialsRequest) {
+        return async(this.loginDao.login(credentialsRequest)
                 .flatMap(authenticationResponse -> {
                     if (authenticationResponse.isSuccessful()) {
                         return just(Objects.requireNonNull(authenticationResponse.body()));

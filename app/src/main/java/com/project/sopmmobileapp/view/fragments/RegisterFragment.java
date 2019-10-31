@@ -13,17 +13,17 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import com.project.sopmmobileapp.MainActivity;
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.RegisterLayoutBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.RegisterClient;
-import com.project.sopmmobileapp.model.dtos.BaseResponse;
-import com.project.sopmmobileapp.model.dtos.RegisterCredentials;
+import com.project.sopmmobileapp.model.dtos.request.RegisterCredentialsRequest;
+import com.project.sopmmobileapp.model.dtos.response.BaseResponse;
 import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.model.exceptions.UserIsTakenException;
 import com.project.sopmmobileapp.model.validators.PasswordValidator;
+import com.project.sopmmobileapp.view.activities.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +53,7 @@ public class RegisterFragment extends Fragment {
     RegisterClient registerClient;
 
     @State(ABundler.class)
-    RegisterCredentials registerCredentials = new RegisterCredentials();
+    RegisterCredentialsRequest registerCredentialsRequest = new RegisterCredentialsRequest();
 
     @Nullable
     @Override
@@ -65,7 +65,7 @@ public class RegisterFragment extends Fragment {
 
         RegisterLayoutBinding registerLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.register_layout,
                 container, false);
-        registerLayoutBinding.setRegisterCredentials(this.registerCredentials);
+        registerLayoutBinding.setRegisterCredentialsRequest(this.registerCredentialsRequest);
         View mainView = registerLayoutBinding.getRoot();
         ButterKnife.bind(this, mainView);
         VoteApplication.getClientsComponent().inject(this);
@@ -76,19 +76,19 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(registerCredentials != null) {
-            Icepick.saveInstanceState(this.registerCredentials, outState);
+        if (registerCredentialsRequest != null) {
+            Icepick.saveInstanceState(this.registerCredentialsRequest, outState);
         }
     }
 
     @OnClick(R.id.sign_button)
     void register() {
-        if (PasswordValidator.valid(this.registerCredentials)) {
-            Disposable disposable = this.registerClient.register(PasswordValidator.toCredential(this.registerCredentials))
+        if (PasswordValidator.valid(this.registerCredentialsRequest)) {
+            Disposable disposable = this.registerClient.register(PasswordValidator.toCredential(this.registerCredentialsRequest))
                     .subscribe((BaseResponse authenticationResponse) -> {
                         Log.i(TAG, "Logged in");
 //                    TokenStore.saveToken(authenticationResponse.getToken());
-//                    CredentialsStore.saveCredentials(this.credentials);
+//                    CredentialsStore.saveCredentials(this.credentialsRequest);
                         Toast.makeText(this.getContext(),REGISTER_SUCCESSFUL_MESSAGE,
                                 Toast.LENGTH_SHORT).show();
                         ((MainActivity) getActivity()).changeFragment(new LoginFragment());

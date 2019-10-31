@@ -2,8 +2,8 @@ package com.project.sopmmobileapp.model.validators;
 
 
 import com.project.sopmmobileapp.R;
-import com.project.sopmmobileapp.model.dtos.Credentials;
-import com.project.sopmmobileapp.model.dtos.RegisterCredentials;
+import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
+import com.project.sopmmobileapp.model.dtos.request.RegisterCredentialsRequest;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,27 +12,28 @@ public class PasswordValidator {
 
     private static int errorMessageCode;
 
-    public static boolean valid(RegisterCredentials registerCredentials) {
-        String password = registerCredentials.getPassword();
-        String repeatPassword = registerCredentials.getRepeatPassword();
-        String username = registerCredentials.getUsername();
+    public static boolean valid(RegisterCredentialsRequest registerCredentialsRequest) {
+        String password = registerCredentialsRequest.getPassword();
+        String repeatPassword = registerCredentialsRequest.getRepeatPassword();
+        String username = registerCredentialsRequest.getUsername();
         Set<Boolean> validateSet = new HashSet<>();
         validateSet.add(checkIsEmptyFields(username, password, repeatPassword));
         validateSet.add(checkIsNotTheSamePasswords(password, repeatPassword));
         return !validateSet.contains(true);
     }
 
-    public static boolean valid(Credentials credentials) {
-        String password = credentials.getPassword();
-        String username = credentials.getUsername();
+    public static boolean valid(CredentialsRequest credentialsRequest) {
+        String password = credentialsRequest.getPassword();
+        String username = credentialsRequest.getUsername();
         Set<Boolean> validateSet = new HashSet<>();
         validateSet.add(checkIsEmptyFields(username, password));
         return !validateSet.contains(true);
     }
-    public static Credentials toCredential(RegisterCredentials registerCredentials) {
-        Credentials credential = new Credentials();
-        credential.setUsername(registerCredentials.getUsername());
-        credential.setPassword(registerCredentials.getPassword());
+
+    public static CredentialsRequest toCredential(RegisterCredentialsRequest registerCredentialsRequest) {
+        CredentialsRequest credential = new CredentialsRequest();
+        credential.setUsername(registerCredentialsRequest.getUsername());
+        credential.setPassword(registerCredentialsRequest.getPassword());
         return credential;
     }
 

@@ -2,8 +2,8 @@ package com.project.sopmmobileapp.model.di.clients;
 
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.model.daos.RegisterDao;
-import com.project.sopmmobileapp.model.dtos.BaseResponse;
-import com.project.sopmmobileapp.model.dtos.Credentials;
+import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
+import com.project.sopmmobileapp.model.dtos.response.BaseResponse;
 import com.project.sopmmobileapp.model.exceptions.UserIsTakenException;
 
 import java.net.HttpURLConnection;
@@ -31,8 +31,8 @@ public class RegisterClient extends BaseClient {
         this.registerDao = retrofit.create(RegisterDao.class);
     }
 
-    public Single<BaseResponse> register(final Credentials credentials) {
-        return async(this.registerDao.register(credentials)
+    public Single<BaseResponse> register(final CredentialsRequest credentialsRequest) {
+        return async(this.registerDao.register(credentialsRequest)
                 .flatMap(authenticationResponse -> {
                     if (authenticationResponse.isSuccessful()) {
                         return just(Objects.requireNonNull(authenticationResponse.body()));

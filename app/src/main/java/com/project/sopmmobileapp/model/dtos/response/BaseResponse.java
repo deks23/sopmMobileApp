@@ -1,4 +1,4 @@
-package com.project.sopmmobileapp.model.dtos;
+package com.project.sopmmobileapp.model.dtos.response;
 
 import com.google.gson.annotations.SerializedName;
 

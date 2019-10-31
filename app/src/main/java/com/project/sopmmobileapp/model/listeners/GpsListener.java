@@ -13,9 +13,9 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.project.sopmmobileapp.MainActivity;
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.model.exceptions.GpsException;
+import com.project.sopmmobileapp.view.activities.MainActivity;
 
 import javax.inject.Inject;
 
