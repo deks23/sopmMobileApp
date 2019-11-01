@@ -9,9 +9,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.project.sopmmobileapp.R;
+import com.project.sopmmobileapp.view.dialogs.AlertDialogsFactory;
 import com.project.sopmmobileapp.view.fragments.LoginFragment;
+import com.project.sopmmobileapp.view.fragments.UserDetailsFragment;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import butterknife.BindView;
 import lombok.Getter;
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
     private static final String CURRENT_FRAGMENT_TAG = "currentFragment";
+
 
     public static MainActivity instance = null;
     private Fragment currentFragment;
@@ -60,9 +65,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (canBack()) {
-            super.getSupportFragmentManager().popBackStack();
+        updateCurrentFragment();
+        if (currentFragment instanceof UserDetailsFragment) {
+            AlertDialogsFactory.createLogoutAlertDialog(this).show();
+        } else if (currentFragment instanceof LoginFragment) {
+            AlertDialogsFactory.createExitAlertDialog(this).show();
+        } else if (canBack()) {
+            popBackStack();
         }
+    }
+
+    private void popBackStack() {
+        super.getSupportFragmentManager().popBackStack();
+        updateCurrentFragment();
     }
 
     private boolean canBack() {
@@ -79,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void clearBackStack() {
+    public void clearBackStack() {
         while (super.getSupportFragmentManager().getBackStackEntryCount() > 0) {
             super.getSupportFragmentManager().popBackStackImmediate();
         }
@@ -87,15 +102,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void putFragment(final Fragment fragment, final String TAG) {
         FragmentTransaction ft = super.getSupportFragmentManager().beginTransaction();
-        ft.detach(currentFragment);
+        if (currentFragment.isVisible()) {
+            ft.detach(currentFragment);
+        }
         if (fragment.isAdded()) {
             ft.show(fragment);
         } else {
-            ft.replace(R.id.layout_on_fragments, fragment, TAG);
+            ft.add(R.id.layout_on_fragments, fragment, TAG);
             ft.addToBackStack(TAG);
             ft.commit();
         }
-        this.currentFragment = fragment;
+        updateCurrentFragment();
     }
 
     @Override
@@ -110,4 +127,8 @@ public class MainActivity extends AppCompatActivity {
         instance = null;
     }
 
+    private void updateCurrentFragment() {
+        List<Fragment> fragments = super.getSupportFragmentManager().getFragments();
+        currentFragment = fragments.get(fragments.size() - 1);
+    }
 }
