@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-//TODO CHANGE SERVE REQUES ABOUT SIDE OF SERVER
+//TODO CHANGE SERVE REQUEST ABOUT SIDE OF SERVER
 public class LoginResponse extends BaseObservable {
 
 

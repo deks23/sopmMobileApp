@@ -1,10 +1,13 @@
 package com.project.sopmmobileapp.view.fragments;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,8 +22,12 @@ import com.project.sopmmobileapp.databinding.UserDetailsFragmentBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.UserDetailsClient;
 import com.project.sopmmobileapp.model.dtos.request.UserDetails;
+import com.project.sopmmobileapp.view.activities.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDate;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -35,6 +42,8 @@ public class UserDetailsFragment extends Fragment {
     @BindView(R.id.error_message)
     TextView errorMessage;
 
+    @BindView(R.id.showMyDate)
+    TextView mDateDisplay;
     @Inject
     UserDetailsClient userDetailsClient;
 
@@ -43,6 +52,10 @@ public class UserDetailsFragment extends Fragment {
 
     @State(ABundler.class)
     UserDetails userDetails = new UserDetails();
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private static final int DATE_DIALOG_ID = 0;
 
     @Nullable
     @Override
@@ -60,6 +73,11 @@ public class UserDetailsFragment extends Fragment {
         ButterKnife.bind(this, mainView);
 
         VoteApplication.getClientsComponent().inject(this);
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        updateDisplay();
         return mainView;
     }
 
@@ -74,11 +92,45 @@ public class UserDetailsFragment extends Fragment {
     public void saveData() {
         userDetails.setGender(getResources().
                 getStringArray(R.array.gender_array)[spinner.getSelectedItemPosition()]);
+        userDetails.setBirthday(LocalDate.of(mYear, mMonth, mDay));
         Log.i(FragmentTags.UserDetailsFragment, userDetails.toString());
-        //TODO Validation data
+        if (userDetails.getBirthday().isAfter(LocalDate.now())) {
+            errorMessage.setText(R.string.birthday_error);
+        }
         //TODO Sed request Data
         //TODO Serve bad answer from server
     }
 
+    @OnClick(R.id.myDatePickerButton)
+    public void enterBirthday() {
+        onCreateDialog(DATE_DIALOG_ID).show();
+    }
 
+    private void updateDisplay() {
+        this.mDateDisplay.setText(
+                new StringBuilder()
+                        .append(mMonth + 1).append("-")
+                        .append(mDay).append("-")
+                        .append(mYear).append(" "));
+    }
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                    mYear = year;
+                    mMonth = monthOfYear;
+                    mDay = dayOfMonth;
+                    updateDisplay();
+                }
+            };
+
+    private Dialog onCreateDialog(int id) {
+        if (id == DATE_DIALOG_ID) {
+            return new DatePickerDialog(MainActivity.instance,
+                    mDateSetListener,
+                    mYear, mMonth, mDay);
+        }
+        return null;
+    }
 }

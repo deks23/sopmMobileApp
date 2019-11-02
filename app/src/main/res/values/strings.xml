@@ -17,15 +17,16 @@
     <string name="credentials_preferences">credentials_preferences</string>
     <string name="user_is_taken">User is taken</string>
     <string name="enter_user_details">Please enter more of your details</string>
-    <string name="enter_user_age">Please enter your age below</string>
+    <string name="enter_user_age">Please enter your birthday date below</string>
     <string name="enter_user_gender">Please enter your gender below</string>
     <string name="save">Save</string>
     <string name="bad_number">Bad Number</string>
     <string name="login_successful">Login is successful</string>
     <string name="register_successful">Register is successful</string>
+    <string name="birthday">Enter you birthday</string>
+    <string name="birthday_error">User not yet born</string>
     <string-array name="gender_array">
         <item>MAN</item>
         <item>WOMAN</item>
-        <item>HIDDEN</item>
     </string-array>
 </resources>

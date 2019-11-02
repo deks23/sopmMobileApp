@@ -24,7 +24,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="10dp"
@@ -66,15 +66,26 @@
                     android:textColor="@color/black"
                     android:textSize="24sp" />
 
-                <EditText
-                    android:id="@+id/age_input"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:ems="10"
-                    android:inputType="number"
-                    android:digits="0123456789."
-                    android:text="@={userDetails.age}" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/myDatePickerButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Choose Date" />
+
+                    <TextView
+                        android:id="@+id/showMyDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/enter_your_gender_message"
@@ -91,7 +102,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:entries="@array/gender_array" />
+                    android:entries="@array/gender_array"
+                    android:gravity="center_horizontal"
+                    android:spinnerMode="dropdown" />
 
                 <Button
                     android:id="@+id/save_details_button"
