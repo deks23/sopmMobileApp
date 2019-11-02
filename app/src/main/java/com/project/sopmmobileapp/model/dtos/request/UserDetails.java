@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,16 +26,16 @@ public class UserDetails extends BaseObservable {
 
 
     @SerializedName("birthday")
-    LocalDate birthday;
+    Date birthday;
 
     @SerializedName("gender")
     String gender;
 
-    public LocalDate getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

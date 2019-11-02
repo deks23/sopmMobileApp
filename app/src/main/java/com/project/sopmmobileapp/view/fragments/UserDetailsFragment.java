@@ -26,8 +26,10 @@ import com.project.sopmmobileapp.view.activities.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -92,9 +94,9 @@ public class UserDetailsFragment extends Fragment {
     public void saveData() {
         userDetails.setGender(getResources().
                 getStringArray(R.array.gender_array)[spinner.getSelectedItemPosition()]);
-        userDetails.setBirthday(LocalDate.of(mYear, mMonth, mDay));
+        userDetails.setBirthday(new GregorianCalendar(mYear, mMonth, mDay).getTime());
         Log.i(FragmentTags.UserDetailsFragment, userDetails.toString());
-        if (userDetails.getBirthday().isAfter(LocalDate.now())) {
+        if (userDetails.getBirthday().after(new Date())) {
             errorMessage.setText(R.string.birthday_error);
         }
         //TODO Sed request Data
@@ -103,7 +105,7 @@ public class UserDetailsFragment extends Fragment {
 
     @OnClick(R.id.myDatePickerButton)
     public void enterBirthday() {
-        onCreateDialog(DATE_DIALOG_ID).show();
+        Objects.requireNonNull(onCreateDialog(DATE_DIALOG_ID)).show();
     }
 
     private void updateDisplay() {
