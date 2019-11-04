@@ -63,8 +63,8 @@ public class RegisterFragment extends Fragment {
         RegisterLayoutBinding registerLayoutBinding = DataBindingUtil.inflate(inflater,
                 R.layout.register_layout,
                 container, false);
-        registerLayoutBinding.setRegisterCredentialsRequest(this.registerCredentialsRequest);
         View mainView = registerLayoutBinding.getRoot();
+        registerLayoutBinding.setRegisterCredentialsRequest(this.registerCredentialsRequest);
         ButterKnife.bind(this, mainView);
         VoteApplication.getClientsComponent().inject(this);
 
@@ -74,9 +74,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (registerCredentialsRequest != null) {
-            Icepick.saveInstanceState(this.registerCredentialsRequest, outState);
-        }
+        Icepick.saveInstanceState(this, outState);
     }
 
     @OnClick(R.id.sign_button)

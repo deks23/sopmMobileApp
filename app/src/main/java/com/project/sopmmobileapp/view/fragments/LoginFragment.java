@@ -17,7 +17,6 @@ import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.LoginFragmentBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
-import com.project.sopmmobileapp.model.di.clients.GpsClient;
 import com.project.sopmmobileapp.model.di.clients.LoginClient;
 import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
 import com.project.sopmmobileapp.model.dtos.response.LoginResponse;
@@ -52,9 +51,6 @@ public class LoginFragment extends Fragment implements BackWithExitDialog {
 
     @Inject
     LoginClient loginClient;
-
-    @Inject
-    GpsClient gpsClient;
 
     @State(ABundler.class)
     CredentialsRequest credentialsRequest = new CredentialsRequest();
