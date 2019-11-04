@@ -9,20 +9,16 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 @AllArgsConstructor
-@Getter
-@Setter
 @Parcel
 public class CredentialsRequest extends BaseObservable {
 
     @SerializedName("username")
-     String username;
+    String username;
 
     @SerializedName("password")
-     String password;
+    String password;
 
     public CredentialsRequest() {
         username = "";

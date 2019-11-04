@@ -6,6 +6,12 @@ import androidx.databinding.library.baseAdapters.BR;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+@Parcel
 public class RegisterCredentialsRequest extends BaseObservable {
 
     @SerializedName("username")
