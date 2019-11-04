@@ -27,6 +27,8 @@ import com.project.sopmmobileapp.view.activities.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -39,12 +41,7 @@ import io.reactivex.disposables.Disposable;
 
 public class RegisterFragment extends Fragment {
 
-    private final static String TAG = RegisterFragment.class.getName();
-
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    private static String  REGISTER_SUCCESSFUL_MESSAGE ="Register is successful";
-    private static String  USER_TAKEN_MESSAGE ="User is taken";
 
     @BindView(R.id.error_message)
     TextView errorMessage;
@@ -63,7 +60,8 @@ public class RegisterFragment extends Fragment {
             Icepick.restoreInstanceState(this, savedInstanceState);
         }
 
-        RegisterLayoutBinding registerLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.register_layout,
+        RegisterLayoutBinding registerLayoutBinding = DataBindingUtil.inflate(inflater,
+                R.layout.register_layout,
                 container, false);
         registerLayoutBinding.setRegisterCredentialsRequest(this.registerCredentialsRequest);
         View mainView = registerLayoutBinding.getRoot();
@@ -84,26 +82,28 @@ public class RegisterFragment extends Fragment {
     @OnClick(R.id.sign_button)
     void register() {
         if (PasswordValidator.valid(this.registerCredentialsRequest)) {
-            Disposable disposable = this.registerClient.register(PasswordValidator.toCredential(this.registerCredentialsRequest))
+            Disposable disposable = this.registerClient.register(PasswordValidator.
+                    toCredential(this.registerCredentialsRequest))
                     .subscribe((BaseResponse authenticationResponse) -> {
-                        Log.i(TAG, "Logged in");
-//                    TokenStore.saveToken(authenticationResponse.getToken());
-//                    CredentialsStore.saveCredentials(this.credentialsRequest);
-                        Toast.makeText(this.getContext(),REGISTER_SUCCESSFUL_MESSAGE,
+                        Log.i(FragmentTags.RegisterFragment, "Logged in");
+                        Toast.makeText(this.getContext(), R.string.register_successful,
                                 Toast.LENGTH_SHORT).show();
-                        ((MainActivity) getActivity()).changeFragment(new LoginFragment());
+                        ((MainActivity) Objects.
+                                requireNonNull(getActivity())).
+                                setBaseForBackStack(new LoginFragment(),
+                                        FragmentTags.LoginFragment);
                     }, (Throwable e) -> {
                         if (e instanceof UserIsTakenException) {
-                            Log.i(TAG, "User is taken", e);;
+                            Log.i(FragmentTags.RegisterFragment, "User is taken", e);
+                            ;
                             this.errorMessage.setText(getString(R.string.user_is_taken));
-                        } else if(e instanceof BadRequestException){
-                            Log.i(TAG, "Server error", e);
+                        } else if (e instanceof BadRequestException) {
+                            Log.i(FragmentTags.RegisterFragment, "Server error", e);
                             this.errorMessage.setText(getString(R.string.server_error));
                         }
                     });
-
             this.compositeDisposable.add(disposable);
-        }else{
+        } else {
             this.errorMessage.setText(getString(PasswordValidator.getErrorMessageCode()));
         }
     }

@@ -27,6 +27,7 @@ import com.project.sopmmobileapp.model.store.CredentialsStore;
 import com.project.sopmmobileapp.model.store.TokenStore;
 import com.project.sopmmobileapp.model.validators.PasswordValidator;
 import com.project.sopmmobileapp.view.activities.MainActivity;
+import com.project.sopmmobileapp.view.fragments.Iback.BackWithExitDialog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,13 +43,9 @@ import icepick.State;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class LoginFragment extends Fragment {
-
-    private final static String TAG = LoginFragment.class.getName();
+public class LoginFragment extends Fragment implements BackWithExitDialog {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    private static final String LOGIN_SUCCESSFUL_MESSAGE = "Login is successful";
 
     @BindView(R.id.error_message)
     TextView errorMessage;
@@ -71,8 +68,10 @@ public class LoginFragment extends Fragment {
             Icepick.restoreInstanceState(this, savedInstanceState);
         }
 
-        LoginFragmentBinding loginFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.login_fragment,
+        LoginFragmentBinding loginFragmentBinding = DataBindingUtil.inflate(inflater,
+                R.layout.login_fragment,
                 container, false);
+
         View mainView = loginFragmentBinding.getRoot();
         loginFragmentBinding.setCredentialsRequest(this.credentialsRequest);
         ButterKnife.bind(this, mainView);
@@ -93,20 +92,31 @@ public class LoginFragment extends Fragment {
         if (PasswordValidator.valid(this.credentialsRequest)) {
             Disposable disposable = this.loginClient.login(this.credentialsRequest)
                     .subscribe((LoginResponse authenticationResponse) -> {
-                        Log.i(TAG, "Logged in");
+                        Log.i(FragmentTags.LoginFragment, "Logged in");
 
 
                         TokenStore.saveToken(authenticationResponse.getToken());
                         CredentialsStore.saveCredentials(this.credentialsRequest);
-                        Toast.makeText(this.getContext(), LOGIN_SUCCESSFUL_MESSAGE,
+                        Toast.makeText(this.getContext(), R.string.login_successful,
                                 Toast.LENGTH_SHORT).show();
-//                   ((MainActivity) getActivity()).setBaseForBackStack(new MainViewPagerFragment());
+                        //TODO Remove !
+                        if (!authenticationResponse.isNeedData()) {
+                            ((MainActivity) Objects.
+                                    requireNonNull(getActivity()))
+                                    .putFragment(new UserDetailsFragment(),
+                                            FragmentTags.UserDetailsFragment);
+                        } else {
+                            ((MainActivity) Objects.requireNonNull(getActivity())).
+                                    setBaseForBackStack(new MainViewPagerFragment(),
+                                            FragmentTags.MainViewPagerFragment);
+                        }
+
                     }, (Throwable e) -> {
                         if (e instanceof LoginException) {
-                            Log.i(TAG, "LoginException", e);
+                            Log.i(FragmentTags.LoginFragment, "LoginException", e);
                             this.errorMessage.setText(getString(R.string.login_error));
                         } else if (e instanceof BadRequestException) {
-                            Log.i(TAG, "Server error", e);
+                            Log.i(FragmentTags.LoginFragment, "Server error", e);
                             this.errorMessage.setText(getString(R.string.server_error));
                         }
                     });
@@ -119,6 +129,9 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.sign_button)
     void goOnRegisterFragment() {
-        ((MainActivity) Objects.requireNonNull(getActivity())).putFragment(new RegisterFragment());
+        ((MainActivity) Objects.
+                requireNonNull(getActivity())).
+                putFragment(new RegisterFragment(),
+                        FragmentTags.RegisterFragment);
     }
 }
