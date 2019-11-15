@@ -6,4 +6,6 @@ public interface FragmentTags {
     String RegisterFragment = "REGISTER_FRAGMENT";
     String UserDetailsFragment = "USER_DETAILS_FRAGMENT";
     String MainViewPagerFragment = "MAIN_VIEW_PAGER_FRAGMENT";
+    String SurveyFragment = "SURVEY_FRAGMENT";
+    String AllSurveysFragment ="ALL_SURVEYS_FRAGMENT";
 }

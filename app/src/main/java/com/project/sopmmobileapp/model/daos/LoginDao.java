@@ -1,7 +1,7 @@
 package com.project.sopmmobileapp.model.daos;
 
-import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
-import com.project.sopmmobileapp.model.dtos.response.LoginResponse;
+import com.project.sopmmobileapp.model.request.Credentials;
+import com.project.sopmmobileapp.model.response.LoginResponse;
 
 import io.reactivex.Single;
 import retrofit2.Response;
@@ -14,6 +14,6 @@ public interface LoginDao {
     String LOGIN_PATH = BASE_USER_PATH + "/login";
 
     @POST(LOGIN_PATH)
-    Single<Response<LoginResponse>> login(@Body CredentialsRequest credentialsRequest);
+    Single<Response<LoginResponse>> login(@Body Credentials credentials);
 
 }

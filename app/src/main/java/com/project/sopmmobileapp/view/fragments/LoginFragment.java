@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +17,8 @@ import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.LoginFragmentBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.LoginClient;
-import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
-import com.project.sopmmobileapp.model.dtos.response.LoginResponse;
+import com.project.sopmmobileapp.model.request.Credentials;
+import com.project.sopmmobileapp.model.response.LoginResponse;
 import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.model.exceptions.LoginException;
 import com.project.sopmmobileapp.model.store.CredentialsStore;
@@ -27,6 +26,7 @@ import com.project.sopmmobileapp.model.store.TokenStore;
 import com.project.sopmmobileapp.model.validators.PasswordValidator;
 import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithExitDialog;
+import com.project.sopmmobileapp.view.fragments.pager.MainViewPagerFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +53,7 @@ public class LoginFragment extends Fragment implements BackWithExitDialog {
     LoginClient loginClient;
 
     @State(ABundler.class)
-    CredentialsRequest credentialsRequest = new CredentialsRequest();
+    Credentials credentials = new Credentials();
 
 
     @Nullable
@@ -69,7 +69,7 @@ public class LoginFragment extends Fragment implements BackWithExitDialog {
                 container, false);
 
         View mainView = loginFragmentBinding.getRoot();
-        loginFragmentBinding.setCredentialsRequest(this.credentialsRequest);
+        loginFragmentBinding.setCredentials(this.credentials);
         ButterKnife.bind(this, mainView);
 
         VoteApplication.getClientsComponent().inject(this);
@@ -85,27 +85,25 @@ public class LoginFragment extends Fragment implements BackWithExitDialog {
 
     @OnClick(R.id.login_button)
     void login() {
-        if (PasswordValidator.valid(this.credentialsRequest)) {
-            Disposable disposable = this.loginClient.login(this.credentialsRequest)
+        if (PasswordValidator.valid(this.credentials)) {
+            Disposable disposable = this.loginClient.login(this.credentials)
                     .subscribe((LoginResponse authenticationResponse) -> {
                         Log.i(FragmentTags.LoginFragment, "Logged in");
 
 
                         TokenStore.saveToken(authenticationResponse.getToken());
-                        CredentialsStore.saveCredentials(this.credentialsRequest);
-                        Toast.makeText(this.getContext(), R.string.login_successful,
-                                Toast.LENGTH_SHORT).show();
-                        //TODO Remove !
-                        if (!authenticationResponse.isNeedData()) {
-                            ((MainActivity) Objects.
-                                    requireNonNull(getActivity()))
-                                    .putFragment(new UserDetailsFragment(),
-                                            FragmentTags.UserDetailsFragment);
-                        } else {
-                            ((MainActivity) Objects.requireNonNull(getActivity())).
-                                    setBaseForBackStack(new MainViewPagerFragment(),
-                                            FragmentTags.MainViewPagerFragment);
-                        }
+                        CredentialsStore.saveCredentials(this.credentials);
+//                        Toast.makeText(this.getContext(), R.string.login_successful,
+//                                Toast.LENGTH_SHORT).show();
+//                        if (authenticationResponse.isNeedData()) {
+//                            ((MainActivity) Objects.
+//                                    requireNonNull(getActivity()))
+//                                    .putFragment(new UserDetailsFragment(),
+//                                            FragmentTags.UserDetailsFragment);
+//                        } else {
+                        ((MainActivity) Objects.requireNonNull(getActivity())).putFragment(new MainViewPagerFragment(),
+                                        FragmentTags.MainViewPagerFragment);
+//                        }
 
                     }, (Throwable e) -> {
                         if (e instanceof LoginException) {

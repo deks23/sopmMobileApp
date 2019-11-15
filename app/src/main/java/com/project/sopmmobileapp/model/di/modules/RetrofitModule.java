@@ -1,7 +1,14 @@
 package com.project.sopmmobileapp.model.di.modules;
 
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.project.sopmmobileapp.model.store.TokenStore;
+import com.google.gson.JsonDeserializer;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -20,7 +27,7 @@ public class RetrofitModule {
 
 //  NAGROK ALOW CREATE ON 8H SERVER PROXY FOR YOUR LOCAL SERVER AND APPLICATION
 //  REQUEST WAY   ANDROID APP -> INTERNET ( NAGROK PROXY SERVER ) -> LOCAL SERVER
-//  ON COMMAND nagrok http 8080 COPY URL WITH HTTPS AND PAST URL BELOW
+//  ON COMMAND ngrok http 8080 COPY URL WITH HTTPS AND PAST URL BELOW
 
 //  BASE URL TO APPLICATION ON HEROKU
     private static final String BASE_URL = "https://salty-inlet-81516.herokuapp.com";
@@ -36,14 +43,15 @@ public class RetrofitModule {
     @Named("auth")
     @Singleton
     @Provides
-    public OkHttpClient authClient(HttpLoggingInterceptor loggingInterceptor) {
+    public OkHttpClient authClient( HttpLoggingInterceptor loggingInterceptor) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.addInterceptor(loggingInterceptor);
         builder.addInterceptor(chain -> {
             okhttp3.Request request = chain.request();
             String authToken = TokenStore.getToken();
+            Log.i("AuthorizationLog","jwt = "+authToken);
             Headers headers = request.headers().newBuilder().
-                    add("Authorization", "Bearer " + authToken)
+                    add("jwt", authToken)
                     .build();
             request = request.newBuilder().headers(headers).build();
             return chain.proceed(request);
@@ -58,6 +66,21 @@ public class RetrofitModule {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.addInterceptor(loggingInterceptor);
         return builder.build();
+    }
+
+    @Named("auth")
+    @Singleton
+    @Provides
+    public Retrofit authRetrofit(@Named("auth") OkHttpClient client) {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
+                (JsonDeserializer<Date>) (json, type, jsonDeserializationContext) ->
+                        new Date(json.getAsJsonPrimitive().getAsString())).create();
+
+        return new Retrofit.Builder().baseUrl(BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build();
     }
 
     @Named("no_auth")

@@ -18,8 +18,8 @@ import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.RegisterLayoutBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.RegisterClient;
-import com.project.sopmmobileapp.model.dtos.request.RegisterCredentialsRequest;
-import com.project.sopmmobileapp.model.dtos.response.BaseResponse;
+import com.project.sopmmobileapp.model.request.RegisterCredentials;
+import com.project.sopmmobileapp.model.response.BaseResponse;
 import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.model.exceptions.UserIsTakenException;
 import com.project.sopmmobileapp.model.validators.PasswordValidator;
@@ -50,7 +50,7 @@ public class RegisterFragment extends Fragment {
     RegisterClient registerClient;
 
     @State(ABundler.class)
-    RegisterCredentialsRequest registerCredentialsRequest = new RegisterCredentialsRequest();
+    RegisterCredentials registerCredentials = new RegisterCredentials();
 
     @Nullable
     @Override
@@ -64,7 +64,7 @@ public class RegisterFragment extends Fragment {
                 R.layout.register_layout,
                 container, false);
         View mainView = registerLayoutBinding.getRoot();
-        registerLayoutBinding.setRegisterCredentialsRequest(this.registerCredentialsRequest);
+        registerLayoutBinding.setRegisterCredentials(this.registerCredentials);
         ButterKnife.bind(this, mainView);
         VoteApplication.getClientsComponent().inject(this);
 
@@ -79,9 +79,9 @@ public class RegisterFragment extends Fragment {
 
     @OnClick(R.id.sign_button)
     void register() {
-        if (PasswordValidator.valid(this.registerCredentialsRequest)) {
+        if (PasswordValidator.valid(this.registerCredentials)) {
             Disposable disposable = this.registerClient.register(PasswordValidator.
-                    toCredential(this.registerCredentialsRequest))
+                    toCredential(this.registerCredentials))
                     .subscribe((BaseResponse authenticationResponse) -> {
                         Log.i(FragmentTags.RegisterFragment, "Logged in");
                         Toast.makeText(this.getContext(), R.string.register_successful,

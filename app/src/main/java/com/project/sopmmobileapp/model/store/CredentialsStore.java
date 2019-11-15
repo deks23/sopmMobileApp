@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.applications.VoteApplication;
-import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
+import com.project.sopmmobileapp.model.request.Credentials;
 
 public class CredentialsStore {
 
@@ -19,10 +19,10 @@ public class CredentialsStore {
         sharedPreferences = context.getSharedPreferences(context.getString(R.string.credentials_preferences), Context.MODE_PRIVATE);
     }
 
-    public static void saveCredentials(CredentialsRequest credentialsRequest) {
+    public static void saveCredentials(Credentials credentials) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(USERNAME_KEY, credentialsRequest.getUsername());
-        editor.putString(PASSWORD_KEY, credentialsRequest.getPassword());
+        editor.putString(USERNAME_KEY, credentials.getUsername());
+        editor.putString(PASSWORD_KEY, credentials.getPassword());
         editor.apply();
     }
 

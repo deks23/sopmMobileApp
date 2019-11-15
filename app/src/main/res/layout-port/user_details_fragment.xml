@@ -6,7 +6,7 @@
 
         <variable
             name="userDetails"
-            type="com.project.sopmmobileapp.model.dtos.request.UserDetails" />
+            type="com.project.sopmmobileapp.model.request.UserDetails" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.project.sopmmobileapp.model.dtos.request;
+package com.project.sopmmobileapp.model.request;
 
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Parcel
-public class RegisterCredentialsRequest extends BaseObservable {
+public class RegisterCredentials extends BaseObservable {
 
     @SerializedName("username")
     String username;
@@ -23,7 +23,7 @@ public class RegisterCredentialsRequest extends BaseObservable {
     @SerializedName("repeatPassword")
     String repeatPassword;
 
-    public RegisterCredentialsRequest() {
+    public RegisterCredentials() {
         username = "";
         password = "";
         repeatPassword = "";

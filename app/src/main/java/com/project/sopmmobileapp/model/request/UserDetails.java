@@ -1,4 +1,4 @@
-package com.project.sopmmobileapp.model.dtos.request;
+package com.project.sopmmobileapp.model.request;
 
 import androidx.databinding.BaseObservable;
 
@@ -17,7 +17,6 @@ import lombok.ToString;
 @Parcel
 @ToString
 public class UserDetails extends BaseObservable {
-
 
     @SerializedName("birthday")
     Date birthday;

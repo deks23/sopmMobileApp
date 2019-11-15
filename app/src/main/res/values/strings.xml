@@ -28,6 +28,7 @@
     <string name="tab_text_1">My Survey</string>
     <string name="tab_text_2">Surveys in area</string>
     <string name="tab_text_3">All Surveys</string>
+    <string name="log_out">Log out</string>
 
     <string-array name="gender_array">
         <item>MAN</item>

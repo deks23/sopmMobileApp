@@ -1,9 +1,10 @@
-package com.project.sopmmobileapp.view.fragments;
+package com.project.sopmmobileapp.view.fragments.pager;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,12 +13,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.sopmmobileapp.R;
+import com.project.sopmmobileapp.view.adapters.AdapterMySurveyListItem;
+import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
 
-import butterknife.ButterKnife;
+import butterknife.BindView;
+import lombok.Getter;
 
-public class MySurveysFragment extends Fragment {
+@Getter
+public class MySurveysFragment extends Fragment implements BackWithLogOutDialog {
 
-    private MySurveysListItemAdapter mySurveysListItemAdapter;
+    private AdapterMySurveyListItem adapterMySurveyListItem;
+
+    @BindView(R.id.add_survey_button)
+    Button addSurvey;
 
     @Nullable
     @Override
@@ -25,15 +33,13 @@ public class MySurveysFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.my_surveys_fragment, container, false);
 
-        ButterKnife.bind(this, mainView);
-
         RecyclerView recycler = mainView.findViewById(R.id.recycler);
         recycler.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(layoutManager);
 
-        mySurveysListItemAdapter = new MySurveysListItemAdapter(getContext());
-        recycler.setAdapter(mySurveysListItemAdapter);
+        adapterMySurveyListItem = new AdapterMySurveyListItem(getContext());
+        recycler.setAdapter(adapterMySurveyListItem);
 
         return mainView;
     }
@@ -41,18 +47,7 @@ public class MySurveysFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.mySurveysListItemAdapter.onDestroy();
     }
 
-    public void addPost(DetailsPostDto detailsPostDto) {
-        this.mySurveysListItemAdapter.addPost(detailsPostDto);
-    }
 
-    public void deletePost(String postId) {
-        this.mySurveysListItemAdapter.deletePost(postId);
-    }
-
-    public void editPost(DetailsPostDto detailsPostDto) {
-        this.adapterAllPostsListItem.editPost(detailsPostDto);
-    }
 }

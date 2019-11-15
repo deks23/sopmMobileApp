@@ -1,7 +1,7 @@
 package com.project.sopmmobileapp.model.daos;
 
-import com.project.sopmmobileapp.model.dtos.request.CredentialsRequest;
-import com.project.sopmmobileapp.model.dtos.response.BaseResponse;
+import com.project.sopmmobileapp.model.request.Credentials;
+import com.project.sopmmobileapp.model.response.BaseResponse;
 
 import io.reactivex.Single;
 import retrofit2.Response;
@@ -13,6 +13,6 @@ public interface RegisterDao {
     String REGISTER_PATH = BASE_USER_PATH + "/register";
 
     @POST(REGISTER_PATH)
-    Single<Response<BaseResponse>> register(@Body CredentialsRequest credentialsRequest);
+    Single<Response<BaseResponse>> register(@Body Credentials credentials);
 
 }

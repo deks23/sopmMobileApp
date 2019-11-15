@@ -2,6 +2,7 @@ package com.project.sopmmobileapp.model.di.components;
 
 import com.project.sopmmobileapp.model.di.clients.GpsClient;
 import com.project.sopmmobileapp.model.di.modules.ClientsModule;
+import com.project.sopmmobileapp.view.adapters.AbstractAdapterSurveyLIstItem;
 import com.project.sopmmobileapp.view.fragments.LoginFragment;
 import com.project.sopmmobileapp.view.fragments.RegisterFragment;
 import com.project.sopmmobileapp.view.fragments.UserDetailsFragment;
@@ -21,4 +22,6 @@ public interface ClientsComponent {
     void inject(UserDetailsFragment userDetailsFragment);
 
     void inject(GpsClient gpsClient);
+
+    void inject(AbstractAdapterSurveyLIstItem abstractAdapterSurveyListItem);
 }
