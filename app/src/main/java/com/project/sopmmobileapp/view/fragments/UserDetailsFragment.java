@@ -29,6 +29,7 @@ import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
 import com.project.sopmmobileapp.view.fragments.pager.MainViewPagerFragment;
 
 import org.jetbrains.annotations.NotNull;
+import org.joda.time.DateTime;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -100,9 +101,9 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
     public void saveData() {
         userDetails.setGender(getResources().
                 getStringArray(R.array.gender_array)[spinner.getSelectedItemPosition()]);
-        userDetails.setBirthday(new GregorianCalendar(mYear, mMonth, mDay).getTime());
+        userDetails.setBirthday(new DateTime(mYear, mMonth, mDay,0,0));
         Log.i(FragmentTags.UserDetailsFragment, userDetails.toString());
-        if (userDetails.getBirthday().after(new Date())) {
+        if (userDetails.getBirthday().isAfterNow()) {
             errorMessage.setText(R.string.birthday_error);
         }
         Disposable disposable = this.userDetailsClient.save(this.userDetails)
