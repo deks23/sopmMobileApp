@@ -17,10 +17,10 @@ import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.LoginFragmentBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.LoginClient;
-import com.project.sopmmobileapp.model.request.Credentials;
-import com.project.sopmmobileapp.model.response.LoginResponse;
 import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.model.exceptions.LoginException;
+import com.project.sopmmobileapp.model.request.Credentials;
+import com.project.sopmmobileapp.model.response.LoginResponse;
 import com.project.sopmmobileapp.model.store.CredentialsStore;
 import com.project.sopmmobileapp.model.store.TokenStore;
 import com.project.sopmmobileapp.model.validators.PasswordValidator;
@@ -93,17 +93,15 @@ public class LoginFragment extends Fragment implements BackWithExitDialog {
 
                         TokenStore.saveToken(authenticationResponse.getToken());
                         CredentialsStore.saveCredentials(this.credentials);
-//                        Toast.makeText(this.getContext(), R.string.login_successful,
-//                                Toast.LENGTH_SHORT).show();
-//                        if (authenticationResponse.isNeedData()) {
-//                            ((MainActivity) Objects.
-//                                    requireNonNull(getActivity()))
-//                                    .putFragment(new UserDetailsFragment(),
-//                                            FragmentTags.UserDetailsFragment);
-//                        } else {
-                        ((MainActivity) Objects.requireNonNull(getActivity())).putFragment(new MainViewPagerFragment(),
-                                        FragmentTags.MainViewPagerFragment);
-//                        }
+                        if (authenticationResponse.isNeedData()) {
+                            ((MainActivity) Objects.
+                                    requireNonNull(getActivity()))
+                                    .putFragment(new UserDetailsFragment(),
+                                            FragmentTags.UserDetailsFragment);
+                        } else {
+                            ((MainActivity) Objects.requireNonNull(getActivity())).setBaseForBackStack(new MainViewPagerFragment(),
+                                    FragmentTags.MainViewPagerFragment);
+                        }
 
                     }, (Throwable e) -> {
                         if (e instanceof LoginException) {
