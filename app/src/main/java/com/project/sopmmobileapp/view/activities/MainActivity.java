@@ -6,12 +6,15 @@ import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.view.dialogs.AlertDialogsFactory;
+import com.project.sopmmobileapp.view.fragments.FragmentTags;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithExitDialog;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
+import com.project.sopmmobileapp.view.fragments.Iback.BackWithRemoveFromStack;
 import com.project.sopmmobileapp.view.fragments.LoginFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -71,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
             AlertDialogsFactory.createLogoutAlertDialog(this).show();
         } else if (currentFragment instanceof BackWithExitDialog) {
             AlertDialogsFactory.createExitAlertDialog(this).show();
+        } else if (currentFragment instanceof BackWithRemoveFromStack) {
+            getSupportFragmentManager().popBackStackImmediate(
+                    FragmentTags.RegisterFragment,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
         } else if (canBack()) {
             popBackStack();
         }
@@ -86,19 +93,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setBaseForBackStack(final Fragment fragment, String TAG) {
+        this.clearBackStack();
+
         super.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_on_fragments, fragment)
                 .addToBackStack(TAG)
                 .commit();
         this.currentFragment = fragment;
-
     }
 
     public void clearBackStack() {
-        while (super.getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            super.getSupportFragmentManager().popBackStackImmediate();
-        }
+        while (super.getSupportFragmentManager().popBackStackImmediate()) ;
+    }
+
+    public void changeFragment(final Fragment fragment) {
+        super.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_on_fragments, fragment)
+                .addToBackStack(currentFragment.getClass().toString())
+                .commit();
     }
 
     public void putFragment(final Fragment fragment, final String TAG) {

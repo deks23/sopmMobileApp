@@ -21,9 +21,12 @@ import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.UserDetailsFragmentBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.UserDetailsClient;
-import com.project.sopmmobileapp.model.dtos.request.UserDetails;
+import com.project.sopmmobileapp.model.request.UserDetails;
+import com.project.sopmmobileapp.model.response.BaseResponse;
+import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
+import com.project.sopmmobileapp.view.fragments.pager.MainViewPagerFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import icepick.Icepick;
 import icepick.State;
+import io.reactivex.disposables.Disposable;
 
 public class UserDetailsFragment extends Fragment implements BackWithLogOutDialog {
 
@@ -81,6 +85,7 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         updateDisplay();
+        clearErrorMessage();
         return mainView;
     }
 
@@ -100,8 +105,21 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
         if (userDetails.getBirthday().after(new Date())) {
             errorMessage.setText(R.string.birthday_error);
         }
-        //TODO Sed request Data
-        //TODO Serve bad answer from server
+        Disposable disposable = this.userDetailsClient.save(this.userDetails)
+                .subscribe((BaseResponse authenticationResponse) ->{
+                    Log.i(FragmentTags.UserDetailsFragment, "UserDetails sent");
+                    if(authenticationResponse.isStatus()){
+                        ((MainActivity) Objects.
+                                requireNonNull(getActivity()))
+                                .putFragment(new MainViewPagerFragment(),
+                                        FragmentTags.MainViewPagerFragment);
+                    }
+                },(Throwable e)->{
+                    if (e instanceof BadRequestException) {
+                        Log.i(FragmentTags.UserDetailsFragment, "LoginException", e);
+                        this.errorMessage.setText(getString(R.string.server_error));
+                    }
+                });
     }
 
     @OnClick(R.id.myDatePickerButton)
@@ -112,9 +130,9 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
     private void updateDisplay() {
         this.mDateDisplay.setText(
                 new StringBuilder()
-                        .append(mMonth + 1).append("-")
+                        .append(mMonth).append("-")
                         .append(mDay).append("-")
-                        .append(mYear).append(" "));
+                        .append(mYear));
     }
 
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -122,8 +140,9 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
                 public void onDateSet(DatePicker view, int year,
                                       int monthOfYear, int dayOfMonth) {
                     mYear = year;
-                    mMonth = monthOfYear;
+                    mMonth = monthOfYear+1;
                     mDay = dayOfMonth;
+                    clearErrorMessage();
                     updateDisplay();
                 }
             };
@@ -135,5 +154,11 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
                     mYear, mMonth, mDay);
         }
         return null;
+    }
+
+    private void clearErrorMessage(){
+        if(errorMessage.getText() != ""){
+            errorMessage.setText("");
+        }
     }
 }

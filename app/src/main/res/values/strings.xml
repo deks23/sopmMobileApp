@@ -25,6 +25,11 @@
     <string name="register_successful">Register is successful</string>
     <string name="birthday">Enter you birthday</string>
     <string name="birthday_error">User not yet born</string>
+    <string name="tab_text_1">My Survey</string>
+    <string name="tab_text_2">Surveys in area</string>
+    <string name="tab_text_3">All Surveys</string>
+    <string name="log_out">Log out</string>
+
     <string-array name="gender_array">
         <item>MAN</item>
         <item>WOMAN</item>

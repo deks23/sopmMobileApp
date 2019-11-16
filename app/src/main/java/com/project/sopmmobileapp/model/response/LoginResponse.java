@@ -1,4 +1,4 @@
-package com.project.sopmmobileapp.model.dtos.response;
+package com.project.sopmmobileapp.model.response;
 
 import androidx.databinding.BaseObservable;
 
@@ -11,7 +11,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-//TODO CHANGE SERVE REQUEST ABOUT SIDE OF SERVER
 public class LoginResponse extends BaseObservable {
 
 
