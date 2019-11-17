@@ -1,5 +1,7 @@
 package com.project.sopmmobileapp.model.response;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
@@ -8,7 +10,10 @@ import lombok.ToString;
 public class Category {
 
 
+    @SerializedName("id")
     private Long id;
+
+    @SerializedName("categoryName")
     private String categoryName;
 
     public Category() {

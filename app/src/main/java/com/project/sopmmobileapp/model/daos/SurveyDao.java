@@ -1,8 +1,10 @@
 package com.project.sopmmobileapp.model.daos;
 
 import com.project.sopmmobileapp.model.request.CreateSurvey;
+import com.project.sopmmobileapp.model.request.NeightborhoodRequest;
 import com.project.sopmmobileapp.model.response.BaseResponse;
 import com.project.sopmmobileapp.model.response.Categories;
+import com.project.sopmmobileapp.model.response.SurveysResponse;
 
 import io.reactivex.Single;
 import retrofit2.Response;
@@ -16,6 +18,8 @@ public interface SurveyDao {
     String ADD_NEW_SURVEY = "/survey/addNew";
     String GET_MOST_POPULAR = "/survey/getMostPopular";
     String GET_SURVEY_BY_ID = "/survey/get/{surveyId}";
+    String GET_SURVEYS_FROM_NEIGHBOTHOOD = "/survey/getFromNeighborhood";
+    String GET_NOT_ANSWERED = "/survey/getNotAnswered";
 
 
     @POST(ADD_NEW_SURVEY)
@@ -26,4 +30,15 @@ public interface SurveyDao {
 
     @GET(GET_MOST_POPULAR)
     Single<Response<BaseResponse>> getMostPopularSurveys();
+
+    @GET(GET_ALL_ACTIVE_SURVEYS)
+    Single<Response<SurveysResponse>> getMySurveys();
+
+    @POST(GET_SURVEYS_FROM_NEIGHBOTHOOD)
+    Single<Response<SurveysResponse>> getSurveysFromNeighborhood(@Body NeightborhoodRequest neightborhoodRequest);
+
+    @GET(GET_NOT_ANSWERED)
+    Single<Response<SurveysResponse>> getNotAnswered();
+
+
 }

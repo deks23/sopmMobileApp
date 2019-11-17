@@ -3,13 +3,15 @@ package com.project.sopmmobileapp.view.fragments;
 import androidx.fragment.app.Fragment;
 
 import com.project.sopmmobileapp.model.request.DetailsSurvey;
+import com.project.sopmmobileapp.model.response.SurveyResponse;
+import com.project.sopmmobileapp.model.response.SurveysResponse;
 
 public class SurveyFragment extends Fragment {
 
 
-    private DetailsSurvey detailsSurvey;
+    private SurveyResponse surveyResponse;
 
-    public SurveyFragment(DetailsSurvey detailsSurvey){
-        this.detailsSurvey = detailsSurvey;
+    public SurveyFragment(SurveyResponse surveyResponse){
+        this.surveyResponse = surveyResponse;
     }
 }

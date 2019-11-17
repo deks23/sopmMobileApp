@@ -37,6 +37,10 @@
     <string name="create_survey">Create survey</string>
     <string name="cancel">Cancel</string>
     <string name="enter_option">Enter option</string>
+    <string name="show_statistics">Show statistics</string>
+    <string name="created_at">Created at:</string>
+    <string name="finished_date">Finished date:</string>
+    <string name="vote">Vote</string>
 
     <string-array name="gender_array">
         <item>MAN</item>

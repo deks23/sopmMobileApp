@@ -9,22 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.model.di.clients.SurveyClient;
-import com.project.sopmmobileapp.model.request.DetailsSurvey;
+import com.project.sopmmobileapp.model.response.SurveyResponse;
+import com.project.sopmmobileapp.model.response.SurveysResponse;
 import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
 import com.project.sopmmobileapp.view.fragments.SurveyFragment;
-import com.project.sopmmobileapp.view.holders.HolderSurveyView;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.project.sopmmobileapp.view.holders.HolderMySurveyView;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public abstract class AbstractAdapterSurveyListItem extends RecyclerView.Adapter<HolderSurveyView> {
+public abstract class AbstractAdapterSurveyListItem extends RecyclerView.Adapter<HolderMySurveyView> {
 
-    protected List<DetailsSurvey> detailsPostDtoList = new ArrayList<>();
+    protected SurveysResponse surveysResponse = new SurveysResponse();
 
     protected Context context;
 
@@ -42,17 +40,17 @@ public abstract class AbstractAdapterSurveyListItem extends RecyclerView.Adapter
 
 
     @Override
-    public void onBindViewHolder(@NonNull HolderSurveyView holder, int position) {
-        holder.setFields(this.detailsPostDtoList.get(position));
-        setActionOnClickSurvey(this.detailsPostDtoList.get(position));
+    public void onBindViewHolder(@NonNull HolderMySurveyView holder, int position) {
+        holder.setFields(this.surveysResponse.get(position));
+        setActionOnClickSurvey(this.surveysResponse.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return this.detailsPostDtoList.size();
+        return this.surveysResponse.size();
     }
 
-    private void setActionOnClickSurvey(DetailsSurvey detailsSurvey) {
+    private void setActionOnClickSurvey(SurveyResponse detailsSurvey) {
         this.view.setOnClickListener((view) -> {
             SurveyFragment fragment = new SurveyFragment(detailsSurvey);
             ((MainActivity) this.context).putFragment(fragment, FragmentTags.SurveyFragment);

@@ -12,9 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.sopmmobileapp.R;
+import com.project.sopmmobileapp.applications.VoteApplication;
+import com.project.sopmmobileapp.model.di.clients.SurveyClient;
 import com.project.sopmmobileapp.model.request.DetailsSurvey;
+import com.project.sopmmobileapp.model.response.SurveyResponse;
 import com.project.sopmmobileapp.view.adapters.AdapterAllSurveysListItem;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import lombok.Getter;
@@ -23,6 +28,9 @@ import lombok.Getter;
 public class AllSurveysFragment extends Fragment implements BackWithLogOutDialog {
 
     private AdapterAllSurveysListItem adapterAllSurveysListItem;
+
+    @Inject
+    SurveyClient surveyClient;
 
     @Nullable
     @Override
@@ -35,15 +43,15 @@ public class AllSurveysFragment extends Fragment implements BackWithLogOutDialog
         recycler.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(layoutManager);
-
-        adapterAllSurveysListItem = new AdapterAllSurveysListItem(getContext());
+        VoteApplication.getClientsComponent().inject(this);
+        adapterAllSurveysListItem = new AdapterAllSurveysListItem(getContext(),surveyClient);
         recycler.setAdapter(adapterAllSurveysListItem);
 
         return mainView;
     }
 
-    public void addSurvey(DetailsSurvey detailsSurvey) {
-        this.adapterAllSurveysListItem.addSurvey(detailsSurvey);
+    public void addSurvey(SurveyResponse surveyResponse) {
+        this.adapterAllSurveysListItem.addSurvey(surveyResponse);
     }
 
     @Override

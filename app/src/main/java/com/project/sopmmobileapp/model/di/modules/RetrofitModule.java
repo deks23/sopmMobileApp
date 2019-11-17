@@ -7,7 +7,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.project.sopmmobileapp.model.store.TokenStore;
 import com.google.gson.JsonDeserializer;
-import java.time.LocalDateTime;
+
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.ISODateTimeFormat;
+
 import java.util.Date;
 
 import javax.inject.Named;
@@ -72,9 +76,10 @@ public class RetrofitModule {
     @Singleton
     @Provides
     public Retrofit authRetrofit(@Named("auth") OkHttpClient client) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class,
-                (JsonDeserializer<Date>) (json, type, jsonDeserializationContext) ->
-                        new Date(json.getAsJsonPrimitive().getAsString())).create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class,
+                (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext) ->
+                        LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(),
+                                ISODateTimeFormat.dateTimeParser())).create();
 
         return new Retrofit.Builder().baseUrl(BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

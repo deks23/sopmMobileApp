@@ -19,6 +19,6 @@ public class GpsClient {
     }
 
     public Optional<Location> getOptionalLocation() {
-        return Optional.of(gpsListener.getLocation());
+        return Optional.ofNullable(gpsListener.getLocation());
     }
 }
