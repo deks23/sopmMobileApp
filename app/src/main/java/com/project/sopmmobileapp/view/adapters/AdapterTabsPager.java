@@ -15,10 +15,11 @@ import java.util.List;
 
 public class AdapterTabsPager extends FragmentPagerAdapter {
 
-    private final List<String> titles = Arrays.asList("My Surveys", "Surveys in the area","All Surveys");
+    private  List<String> titles;
 
-    public AdapterTabsPager(FragmentManager fragmentManager) {
+    public AdapterTabsPager(FragmentManager fragmentManager, List<String> titles) {
         super(fragmentManager);
+        this.titles = titles;
     }
 
 

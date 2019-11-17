@@ -22,7 +22,7 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public abstract class AbstractAdapterSurveyLIstItem extends RecyclerView.Adapter<HolderSurveyView> {
+public abstract class AbstractAdapterSurveyListItem extends RecyclerView.Adapter<HolderSurveyView> {
 
     protected List<DetailsSurvey> detailsPostDtoList = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public abstract class AbstractAdapterSurveyLIstItem extends RecyclerView.Adapter
     @Inject
     protected SurveyClient surveyClient;
 
-    protected AbstractAdapterSurveyLIstItem(Context context) {
+    protected AbstractAdapterSurveyListItem(Context context) {
         this.context = context;
         VoteApplication.getClientsComponent().inject(this);
     }

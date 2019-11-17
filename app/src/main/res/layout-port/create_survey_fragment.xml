@@ -14,8 +14,9 @@
         android:layout_height="match_parent">
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +55,7 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="20dp"
+                        android:layout_margin="5dp"
                         android:layout_weight="2"
                         android:text="@string/category_label"
                         android:textAlignment="center" />
@@ -63,9 +64,9 @@
                         android:id="@+id/category_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
+                        android:layout_margin="5dp"
                         android:layout_weight="2"
-                        android:entries="@array/gender_array"
+                        android:entries="@array/categories"
                         android:gravity="center_horizontal"
                         android:spinnerMode="dropdown" />
                 </LinearLayout>
@@ -94,6 +95,7 @@
                         android:id="@+id/finishDatePickerButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_weight="2"
                         android:text="@string/set_finish_date" />
 
@@ -101,6 +103,7 @@
                         android:id="@+id/finishDateLabel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="5dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:textAlignment="center" />
@@ -115,6 +118,7 @@
                         android:id="@+id/add_option_bt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_weight="2"
                         android:text="@string/add_option" />
 
@@ -122,16 +126,41 @@
                         android:id="@+id/remove_option_bt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_weight="2"
                         android:text="@string/remove_last_option" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/options_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/cancel_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="2"
+                        android:text="@string/cancel" />
+
+                    <Button
+                        android:id="@+id/create_survey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_weight="2"
+                        android:text="@string/create_survey" />
+                </LinearLayout>
 
 
             </LinearLayout>
         </ScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

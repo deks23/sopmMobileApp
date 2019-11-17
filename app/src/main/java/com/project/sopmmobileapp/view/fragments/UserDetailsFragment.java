@@ -21,19 +21,19 @@ import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.UserDetailsFragmentBinding;
 import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.UserDetailsClient;
+import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.model.request.UserDetails;
 import com.project.sopmmobileapp.model.response.BaseResponse;
-import com.project.sopmmobileapp.model.exceptions.BadRequestException;
 import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
 import com.project.sopmmobileapp.view.fragments.pager.MainViewPagerFragment;
 
 import org.jetbrains.annotations.NotNull;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -101,21 +101,23 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
     public void saveData() {
         userDetails.setGender(getResources().
                 getStringArray(R.array.gender_array)[spinner.getSelectedItemPosition()]);
-        userDetails.setBirthday(new DateTime(mYear, mMonth, mDay,0,0));
+        userDetails.setBirthday(new LocalDateTime().withYear(mYear)
+        .withMonthOfYear(mMonth)
+        .withDayOfMonth(mDay));
         Log.i(FragmentTags.UserDetailsFragment, userDetails.toString());
-        if (userDetails.getBirthday().isAfterNow()) {
+        if (userDetails.getBirthday().isAfter(LocalDateTime.now())) {
             errorMessage.setText(R.string.birthday_error);
         }
         Disposable disposable = this.userDetailsClient.save(this.userDetails)
-                .subscribe((BaseResponse authenticationResponse) ->{
+                .subscribe((BaseResponse authenticationResponse) -> {
                     Log.i(FragmentTags.UserDetailsFragment, "UserDetails sent");
-                    if(authenticationResponse.isStatus()){
+                    if (authenticationResponse.isStatus()) {
                         ((MainActivity) Objects.
                                 requireNonNull(getActivity()))
                                 .putFragment(new MainViewPagerFragment(),
                                         FragmentTags.MainViewPagerFragment);
                     }
-                },(Throwable e)->{
+                }, (Throwable e) -> {
                     if (e instanceof BadRequestException) {
                         Log.i(FragmentTags.UserDetailsFragment, "LoginException", e);
                         this.errorMessage.setText(getString(R.string.server_error));
@@ -141,7 +143,7 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
                 public void onDateSet(DatePicker view, int year,
                                       int monthOfYear, int dayOfMonth) {
                     mYear = year;
-                    mMonth = monthOfYear+1;
+                    mMonth = monthOfYear + 1;
                     mDay = dayOfMonth;
                     clearErrorMessage();
                     updateDisplay();
@@ -157,8 +159,8 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
         return null;
     }
 
-    private void clearErrorMessage(){
-        if(errorMessage.getText() != ""){
+    private void clearErrorMessage() {
+        if (errorMessage.getText() != "") {
             errorMessage.setText("");
         }
     }

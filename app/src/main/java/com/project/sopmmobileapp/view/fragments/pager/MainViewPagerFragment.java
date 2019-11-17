@@ -75,12 +75,8 @@ public class MainViewPagerFragment extends Fragment implements BackWithLogOutDia
                     colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
                     colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
                     colorTransitionPagerTitleView.setText(fragments.get(index));
-                    colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            viewPager.setCurrentItem(index);
-                        }
-                    });
+                    colorTransitionPagerTitleView.setOnClickListener(view -> viewPager
+                            .setCurrentItem(index));
                     return colorTransitionPagerTitleView;
                 }
 
@@ -93,7 +89,7 @@ public class MainViewPagerFragment extends Fragment implements BackWithLogOutDia
             });
             magicIndicator.setNavigator(commonNavigator);
             ViewPagerHelper.bind(magicIndicator, viewPager);
-            AdapterTabsPager adapterTabsPager = new AdapterTabsPager(getFragmentManager());
+            AdapterTabsPager adapterTabsPager = new AdapterTabsPager(getFragmentManager(), fragments);
             viewPager.setAdapter(adapterTabsPager);
 
             isInitialized = true;

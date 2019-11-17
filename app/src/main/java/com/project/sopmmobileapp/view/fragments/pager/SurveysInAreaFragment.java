@@ -14,10 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.model.request.DetailsSurvey;
 import com.project.sopmmobileapp.view.adapters.AdapterInAreaSurveysListItem;
+import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
 
 import butterknife.ButterKnife;
 
-public class SurveysInAreaFragment extends Fragment {
+public class SurveysInAreaFragment extends Fragment implements BackWithLogOutDialog {
 
 
     private AdapterInAreaSurveysListItem adapterInAreaSurveysListItem;
@@ -29,7 +30,7 @@ public class SurveysInAreaFragment extends Fragment {
         View mainView = inflater.inflate(R.layout.near_survey_list_fragment, container, false);
 
         ButterKnife.bind(this, mainView);
-        RecyclerView recycler = mainView.findViewById(R.id.recycler);
+        RecyclerView recycler = mainView.findViewById(R.id.near_surveys_recycler);
         recycler.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(layoutManager);

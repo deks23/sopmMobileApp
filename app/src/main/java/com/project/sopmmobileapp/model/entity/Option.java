@@ -16,4 +16,35 @@ public class Option {
     private LocalDateTime createDate;
     private OptionResult result;
 
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public OptionResult getResult() {
+        return result;
+    }
+
+    public void setResult(OptionResult result) {
+        this.result = result;
+    }
 }

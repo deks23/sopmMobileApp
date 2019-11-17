@@ -11,7 +11,7 @@ import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.model.request.DetailsSurvey;
 import com.project.sopmmobileapp.view.holders.HolderSurveyView;
 
-public class AdapterAllSurveysListItem extends AbstractAdapterSurveyLIstItem {
+public class AdapterAllSurveysListItem extends AbstractAdapterSurveyListItem {
 
     public AdapterAllSurveysListItem(Context context) {
         super(context);
@@ -20,7 +20,10 @@ public class AdapterAllSurveysListItem extends AbstractAdapterSurveyLIstItem {
     @NonNull
     @Override
     public HolderSurveyView onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.my_survey_list_item, viewGroup, false);
+        View view = LayoutInflater
+                .from(context)
+                .inflate(R.layout.my_survey_list_item,
+                        viewGroup, false);
         this.view = view;
         return new HolderSurveyView(view);
     }

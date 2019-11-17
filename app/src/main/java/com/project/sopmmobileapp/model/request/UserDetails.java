@@ -4,11 +4,8 @@ import androidx.databinding.BaseObservable;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.parceler.Parcel;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -21,16 +18,16 @@ import lombok.ToString;
 public class UserDetails extends BaseObservable {
 
     @SerializedName("birthday")
-    DateTime birthday;
+    LocalDateTime birthday;
 
     @SerializedName("gender")
     String gender;
 
-    public DateTime getBirthday() {
+    public LocalDateTime getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(DateTime birthday) {
+    public void setBirthday(LocalDateTime birthday) {
         this.birthday = birthday;
     }
 

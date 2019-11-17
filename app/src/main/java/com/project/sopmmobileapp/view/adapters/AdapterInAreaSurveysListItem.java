@@ -10,7 +10,7 @@ import com.project.sopmmobileapp.view.holders.HolderSurveyView;
 
 import java.util.List;
 
-public class AdapterInAreaSurveysListItem extends AbstractAdapterSurveyLIstItem {
+public class AdapterInAreaSurveysListItem extends AbstractAdapterSurveyListItem {
 
 
     public AdapterInAreaSurveysListItem(Context context) {

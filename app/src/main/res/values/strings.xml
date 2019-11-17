@@ -29,9 +29,25 @@
     <string name="tab_text_2">Surveys in area</string>
     <string name="tab_text_3">All Surveys</string>
     <string name="log_out">Log out</string>
+    <string name="set_finish_date">"Choose finish date</string>
+    <string name="enter_question">"Enter question</string>
+    <string name="category_label">"Choose Category</string>
+    <string name="add_option">Add option</string>
+    <string name="remove_last_option">Remove last option</string>
+    <string name="create_survey">Create survey</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_option">Enter option</string>
 
     <string-array name="gender_array">
         <item>MAN</item>
         <item>WOMAN</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>IT</item>
+        <item>Film</item>
+        <item>Muzyka</item>
+        <item>Polityka</item>
+        <item>Zakupy</item>
     </string-array>
 </resources>

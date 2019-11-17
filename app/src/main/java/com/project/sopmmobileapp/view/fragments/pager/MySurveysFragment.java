@@ -8,15 +8,26 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.sopmmobileapp.R;
+import com.project.sopmmobileapp.databinding.LoginFragmentBinding;
+import com.project.sopmmobileapp.databinding.MySurveysFragmentBinding;
+import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.adapters.AdapterMySurveyListItem;
+import com.project.sopmmobileapp.view.fragments.CreateSurveyFragment;
+import com.project.sopmmobileapp.view.fragments.FragmentTags;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
 
+import java.util.Objects;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import lombok.Getter;
 
 @Getter
@@ -24,23 +35,23 @@ public class MySurveysFragment extends Fragment implements BackWithLogOutDialog 
 
     private AdapterMySurveyListItem adapterMySurveyListItem;
 
-    @BindView(R.id.add_survey_button)
-    Button addSurvey;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View mainView = inflater.inflate(R.layout.my_surveys_fragment, container, false);
 
-        RecyclerView recycler = mainView.findViewById(R.id.recycler);
-        recycler.setHasFixedSize(true);
+        MySurveysFragmentBinding mySurveysFragmentBinding = DataBindingUtil.inflate(inflater,
+                R.layout.my_surveys_fragment,
+                container, false);
+
+        View mainView = mySurveysFragmentBinding.getRoot();
+        RecyclerView recyclerView = mainView.findViewById(R.id.my_surveys_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recycler.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         adapterMySurveyListItem = new AdapterMySurveyListItem(getContext());
-        recycler.setAdapter(adapterMySurveyListItem);
-
+        recyclerView.setAdapter(adapterMySurveyListItem);
+        ButterKnife.bind(this, mainView);
         return mainView;
     }
 
@@ -50,4 +61,10 @@ public class MySurveysFragment extends Fragment implements BackWithLogOutDialog 
     }
 
 
+    @OnClick(R.id.add_survey_button)
+    public void addSurvey() {
+        ((MainActivity) Objects.requireNonNull(getActivity()))
+                .putFragment(new CreateSurveyFragment(),
+                        FragmentTags.CreateSurveyFragment);
+    }
 }

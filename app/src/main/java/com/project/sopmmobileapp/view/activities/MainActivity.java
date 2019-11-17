@@ -75,9 +75,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (currentFragment instanceof BackWithExitDialog) {
             AlertDialogsFactory.createExitAlertDialog(this).show();
         } else if (currentFragment instanceof BackWithRemoveFromStack) {
-            getSupportFragmentManager().popBackStackImmediate(
-                    FragmentTags.RegisterFragment,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            AlertDialogsFactory.createSaveAlertDialog(this).show();
         } else if (canBack()) {
             popBackStack();
         }

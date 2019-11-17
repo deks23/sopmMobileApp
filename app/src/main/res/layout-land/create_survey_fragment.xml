@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-            name="createSurvey"
+            name="survey"
             type="com.project.sopmmobileapp.model.request.CreateSurvey" />
     </data>
 
@@ -82,7 +81,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={createSurvey.question}"
+                        android:text="@={survey.question}"
                         android:textSize="18sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>

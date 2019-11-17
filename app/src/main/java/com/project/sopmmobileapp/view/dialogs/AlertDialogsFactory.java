@@ -8,6 +8,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
 import com.project.sopmmobileapp.view.fragments.LoginFragment;
+import com.project.sopmmobileapp.view.fragments.pager.MainViewPagerFragment;
 
 import java.util.Objects;
 
@@ -36,6 +37,21 @@ public class AlertDialogsFactory {
                 .setPositiveButton("Yes", (arg0, arg1) -> {
                     Objects.requireNonNull(activity).finish();
                     System.exit(0);
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+
+                })
+                .create();
+    }
+
+    public static AlertDialog createSaveAlertDialog(Activity activity) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(activity);
+        return builder.setTitle("Confirm you cancel")
+                .setMessage("Are you sure, You want cancel this operations?")
+                .setPositiveButton("Yes", (arg0, arg1) -> {
+                    ((MainActivity) Objects.
+                            requireNonNull(activity)).setBaseForBackStack(new MainViewPagerFragment(),
+                            FragmentTags.MainViewPagerFragment);
                 })
                 .setNegativeButton("No", (dialog, which) -> {
 

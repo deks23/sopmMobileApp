@@ -11,7 +11,7 @@ import com.project.sopmmobileapp.view.holders.HolderSurveyView;
 
 import java.util.List;
 
-public class AdapterMySurveyListItem extends AbstractAdapterSurveyLIstItem {
+public class AdapterMySurveyListItem extends AbstractAdapterSurveyListItem {
 
     private  AllSurveysFragment allSurveysFragment;
 

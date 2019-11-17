@@ -1,7 +1,12 @@
 package com.project.sopmmobileapp.model.request;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.databinding.library.baseAdapters.BR;
+
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.LocalDateTime;
 import org.parceler.Parcel;
 
 import java.util.Collections;
@@ -9,10 +14,14 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Parcel
-public class CreateSurvey {
+@Builder
+public class CreateSurvey extends BaseObservable {
 
     @SerializedName("question")
     private String question;
@@ -30,23 +39,16 @@ public class CreateSurvey {
     private double longitude;
 
     @SerializedName("finishTime")
-    private Date finishTime;
+    private LocalDateTime finishTime;
 
-
-    public CreateSurvey() {
-        question = "";
-        answerOptions = Collections.singletonList("");
-        category = 0;
-        latitude = 0.0;
-        longitude = 0.0;
-    }
-
+    @Bindable
     public String getQuestion() {
         return question;
     }
 
     public void setQuestion(String question) {
         this.question = question;
+        notifyPropertyChanged(BR.survey);
     }
 
     public List<String> getAnswerOptions() {
@@ -81,11 +83,11 @@ public class CreateSurvey {
         this.longitude = longitude;
     }
 
-    public Date getFinishTime() {
+    public LocalDateTime getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(Date finishTime) {
+    public void setFinishTime(LocalDateTime finishTime) {
         this.finishTime = finishTime;
     }
 

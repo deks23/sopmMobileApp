@@ -19,7 +19,7 @@ public interface SurveyDao {
 
 
     @POST(ADD_NEW_SURVEY)
-    Single<Response<CreateSurvey>> addSurvey(@Body CreateSurvey createSurvey);
+    Single<Response<BaseResponse>> addSurvey(@Body CreateSurvey createSurvey);
 
     @GET(GET_ALL_CATEGORIES)
     Single<Response<Categories>> getCategories();

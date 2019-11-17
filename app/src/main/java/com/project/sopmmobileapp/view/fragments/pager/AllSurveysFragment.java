@@ -31,7 +31,7 @@ public class AllSurveysFragment extends Fragment implements BackWithLogOutDialog
         View mainView = inflater.inflate(R.layout.all_surveys_list_fragment, container, false);
 
         ButterKnife.bind(this, mainView);
-        RecyclerView recycler = mainView.findViewById(R.id.recycler);
+        RecyclerView recycler = mainView.findViewById(R.id.all_surveys_recycler);
         recycler.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(layoutManager);

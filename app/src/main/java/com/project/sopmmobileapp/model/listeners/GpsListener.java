@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -24,7 +25,7 @@ public class GpsListener implements LocationListener {
     private Activity activity;
     private Location location;
     private static final int LOCATION_REFRESH_TIME_MSEC = 5000;
-    private static final int LOCATION_REFRESH_DISTANCE_METERS = 100;
+    private static final int LOCATION_REFRESH_DISTANCE_METERS = 10;
     private static final int REQUEST_CODE = 123;
     private String TAG = this.getClass().getName();
 
@@ -63,8 +64,8 @@ public class GpsListener implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         this.location = location;
-//        Toast.makeText(context.getApplicationContext(), location.getLatitude() + " " + location.getLongitude(),
-//                Toast.LENGTH_SHORT).show();
+        Toast.makeText(context.getApplicationContext(), location.getLatitude() + " " + location.getLongitude(),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
