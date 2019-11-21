@@ -9,4 +9,5 @@ public interface FragmentTags {
     String SurveyFragment = "SURVEY_FRAGMENT";
     String AllSurveysFragment ="ALL_SURVEYS_FRAGMENT";
     String CreateSurveyFragment = "CREATE_SURVEY_FRAGMENT";
+    String VoteFragment = "VOTE_FRAGMENT";
 }

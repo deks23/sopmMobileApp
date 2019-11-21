@@ -100,7 +100,7 @@
                         android:text="@string/set_finish_date" />
 
                     <TextView
-                        android:id="@+id/finishDateLabel"
+                        android:id="@+id/finish_date_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"

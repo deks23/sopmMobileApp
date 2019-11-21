@@ -5,6 +5,8 @@ import com.project.sopmmobileapp.model.di.clients.LoginClient;
 import com.project.sopmmobileapp.model.di.clients.RegisterClient;
 import com.project.sopmmobileapp.model.di.clients.SurveyClient;
 import com.project.sopmmobileapp.model.di.clients.UserDetailsClient;
+import com.project.sopmmobileapp.model.di.clients.VoteClient;
+import com.project.sopmmobileapp.model.service.LocationService;
 
 import javax.inject.Singleton;
 
@@ -44,5 +46,14 @@ public class ClientsModule {
         return new SurveyClient();
     }
 
+    @Singleton
+    @Provides
+    public VoteClient voteClient() {
+        return new VoteClient();
+    }
+
+    @Singleton
+    @Provides
+    public LocationService locationService() { return new LocationService(); }
 
 }

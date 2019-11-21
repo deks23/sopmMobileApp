@@ -3,6 +3,7 @@ package com.project.sopmmobileapp.model.response;
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.LocalDateTime;
+import org.parceler.Parcel;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Parcel
 public class AnswerResponse {
 
     @SerializedName("id")

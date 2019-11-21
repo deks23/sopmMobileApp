@@ -4,6 +4,7 @@ import com.project.sopmmobileapp.model.di.clients.LoginClient;
 import com.project.sopmmobileapp.model.di.clients.RegisterClient;
 import com.project.sopmmobileapp.model.di.clients.SurveyClient;
 import com.project.sopmmobileapp.model.di.clients.UserDetailsClient;
+import com.project.sopmmobileapp.model.di.clients.VoteClient;
 import com.project.sopmmobileapp.model.di.modules.RetrofitModule;
 
 import javax.inject.Singleton;
@@ -21,4 +22,6 @@ public interface RetrofitComponent {
     void inject(UserDetailsClient userDetailsClient);
 
     void inject(SurveyClient surveyClient);
+
+    void inject(VoteClient voteClient);
 }

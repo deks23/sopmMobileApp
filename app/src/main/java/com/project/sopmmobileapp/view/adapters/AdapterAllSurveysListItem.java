@@ -10,12 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.sopmmobileapp.R;
+import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.model.di.clients.SurveyClient;
 import com.project.sopmmobileapp.model.response.SurveyResponse;
 import com.project.sopmmobileapp.model.response.SurveysResponse;
+import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
+import com.project.sopmmobileapp.view.fragments.SurveyFragment;
+import com.project.sopmmobileapp.view.fragments.VoteFragment;
 import com.project.sopmmobileapp.view.holders.HolderAllSurvey;
 import com.project.sopmmobileapp.view.holders.HolderMySurveyView;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -32,11 +38,12 @@ public class AdapterAllSurveysListItem extends RecyclerView.Adapter<HolderAllSur
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    private SurveyClient surveyClient;
+    @Inject
+    SurveyClient surveyClient;
 
-    public AdapterAllSurveysListItem(Context context, SurveyClient surveyClient) {
+    public AdapterAllSurveysListItem(Context context) {
         this.context = context;
-        this.surveyClient = surveyClient;
+        VoteApplication.getClientsComponent().inject(this);
         this.getSurveys();
     }
 
@@ -45,7 +52,7 @@ public class AdapterAllSurveysListItem extends RecyclerView.Adapter<HolderAllSur
     public HolderAllSurvey onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater
                 .from(context)
-                .inflate(R.layout.my_survey_list_item,
+                .inflate(R.layout.all_survey_list_item,
                         viewGroup, false);
         this.view = view;
         return new HolderAllSurvey(view);
@@ -60,27 +67,40 @@ public class AdapterAllSurveysListItem extends RecyclerView.Adapter<HolderAllSur
     @Override
     public void onBindViewHolder(@NonNull HolderAllSurvey holder, int position) {
         holder.setFields(this.surveysResponse.get(position));
+        setActionOnClickSurvey(this.surveysResponse.get(position));
     }
 
 
     public void getSurveys() {
-        Disposable disposable = surveyClient.getNotAnswered()
+        Disposable disposable = surveyClient.getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateSurveys, e -> Log.e(FragmentTags.MainViewPagerFragment, e.getMessage(), e));
         compositeDisposable.add(disposable);
     }
+
     @Override
     public int getItemCount() {
         return surveysResponse.size();
     }
 
     public void onDestroy() {
-        compositeDisposable.dispose();
+        if (compositeDisposable != null) {
+            compositeDisposable.dispose();
+        }
     }
 
     private void updateSurveys(SurveysResponse surveysResponse) {
         this.surveysResponse = surveysResponse;
         super.notifyDataSetChanged();
     }
+
+    private void setActionOnClickSurvey(SurveyResponse detailsSurvey) {
+        this.view.setOnClickListener((view) -> {
+            VoteFragment fragment = new VoteFragment(detailsSurvey);
+            ((MainActivity) this.context).putFragment(fragment, FragmentTags.VoteFragment);
+        });
+
+    }
+
 }

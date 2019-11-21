@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.view.activities.MainActivity;
+import com.project.sopmmobileapp.view.adapters.AdapterInAreaSurveysListItem;
 import com.project.sopmmobileapp.view.adapters.AdapterTabsPager;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithLogOutDialog;
@@ -90,11 +91,12 @@ public class MainViewPagerFragment extends Fragment implements BackWithLogOutDia
             magicIndicator.setNavigator(commonNavigator);
             ViewPagerHelper.bind(magicIndicator, viewPager);
             AdapterTabsPager adapterTabsPager = new AdapterTabsPager(getFragmentManager(), fragments);
+            viewPager.setOffscreenPageLimit(-1);
             viewPager.setAdapter(adapterTabsPager);
+
 
             isInitialized = true;
         }
-
         return mainView;
     }
 

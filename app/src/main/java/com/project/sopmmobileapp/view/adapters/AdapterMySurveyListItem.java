@@ -3,24 +3,45 @@ package com.project.sopmmobileapp.view.adapters;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.sopmmobileapp.R;
+import com.project.sopmmobileapp.applications.VoteApplication;
+import com.project.sopmmobileapp.model.di.clients.SurveyClient;
 import com.project.sopmmobileapp.model.response.SurveyResponse;
 import com.project.sopmmobileapp.model.response.SurveysResponse;
+import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
+import com.project.sopmmobileapp.view.fragments.SurveyFragment;
 import com.project.sopmmobileapp.view.holders.HolderMySurveyView;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class AdapterMySurveyListItem extends AbstractAdapterSurveyListItem {
+public class AdapterMySurveyListItem extends RecyclerView.Adapter<HolderMySurveyView> {
+
+    private  SurveysResponse surveysResponse = new SurveysResponse();
+
+    private Context context;
+
+    private View view;
+
+    @Inject
+    SurveyClient surveyClient;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public AdapterMySurveyListItem(Context context) {
-        super(context);
+        this.context = context;
+        VoteApplication.getClientsComponent().inject(this);
         this.getMySurveys();
     }
 
@@ -34,8 +55,8 @@ public class AdapterMySurveyListItem extends AbstractAdapterSurveyListItem {
 
     @Override
     public void onBindViewHolder(@NonNull HolderMySurveyView holder, int position) {
-        super.onBindViewHolder(holder, position);
-        setActionOnClicStatistics(super.surveysResponse.get(position));
+        holder.setFields(this.surveysResponse.get(position));
+        setActionOnClicStatistics(surveysResponse.get(position));
 
     }
 
@@ -45,21 +66,21 @@ public class AdapterMySurveyListItem extends AbstractAdapterSurveyListItem {
     }
 
     public void onDestroy() {
-        super.compositeDisposable.dispose();
+        compositeDisposable.dispose();
     }
 
     public void addSurvey(SurveyResponse surveyResponse) {
-        super.surveysResponse.add(surveyResponse);
+        surveysResponse.add(surveyResponse);
         super.notifyDataSetChanged();
     }
 
     private void getMySurveys() {
 
-        Disposable disposable = super.surveyClient.getMySurveys()
+        Disposable disposable = surveyClient.getMySurveys()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateSurveys, e -> Log.e(FragmentTags.MainViewPagerFragment, e.getMessage(), e));
-        super.compositeDisposable.add(disposable);
+        compositeDisposable.add(disposable);
     }
 
     private void updateSurveys(SurveysResponse surveysResponse) {
@@ -68,6 +89,14 @@ public class AdapterMySurveyListItem extends AbstractAdapterSurveyListItem {
     }
 
     private void setActionOnClicStatistics( SurveyResponse surveyResponse){
+
+    }
+
+    private void setActionOnClickSurvey(SurveyResponse detailsSurvey) {
+        this.view.setOnClickListener((view) -> {
+            SurveyFragment fragment = new SurveyFragment(detailsSurvey);
+            ((MainActivity) this.context).putFragment(fragment, FragmentTags.SurveyFragment);
+        });
 
     }
 }

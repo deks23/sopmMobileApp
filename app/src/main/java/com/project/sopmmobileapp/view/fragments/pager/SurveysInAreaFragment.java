@@ -27,19 +27,11 @@ public class SurveysInAreaFragment extends Fragment implements BackWithLogOutDia
 
     private AdapterInAreaSurveysListItem adapterInAreaSurveysListItem;
 
-    @Inject
-    GpsClient gpsClient;
-
-    @Inject
-    SurveyClient surveyClient;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.near_survey_list_fragment, container, false);
-        VoteApplication.getClientsComponent().inject(this);
-
         ButterKnife.bind(this, mainView);
         RecyclerView recycler = mainView.findViewById(R.id.near_surveys_recycler);
         recycler.setHasFixedSize(true);
@@ -47,7 +39,7 @@ public class SurveysInAreaFragment extends Fragment implements BackWithLogOutDia
         recycler.setLayoutManager(layoutManager);
 
 
-        adapterInAreaSurveysListItem = new AdapterInAreaSurveysListItem(getContext(),gpsClient,surveyClient);
+        adapterInAreaSurveysListItem = new AdapterInAreaSurveysListItem(getContext());
         recycler.setAdapter(adapterInAreaSurveysListItem);
 
         return mainView;
@@ -58,5 +50,9 @@ public class SurveysInAreaFragment extends Fragment implements BackWithLogOutDia
     public void onDestroy() {
         super.onDestroy();
         this.adapterInAreaSurveysListItem.onDestroy();
+    }
+
+    public void updateContent(){
+        adapterInAreaSurveysListItem.getSurveys();
     }
 }

@@ -89,8 +89,6 @@ public class LoginFragment extends Fragment implements BackWithExitDialog {
             Disposable disposable = this.loginClient.login(this.credentials)
                     .subscribe((LoginResponse authenticationResponse) -> {
                         Log.i(FragmentTags.LoginFragment, "Logged in");
-
-
                         TokenStore.saveToken(authenticationResponse.getToken());
                         CredentialsStore.saveCredentials(this.credentials);
                         if (authenticationResponse.isNeedData()) {

@@ -1,16 +1,29 @@
 package com.project.sopmmobileapp.model.dtos;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import androidx.databinding.BaseObservable;
 
-@Getter
-@Setter
+import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Synchronized;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
-public class OptionItemDto {
+@Parcel
+public class OptionItemDto extends BaseObservable {
 
+    @SerializedName("option")
     private String option;
 
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
 }

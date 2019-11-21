@@ -10,6 +10,7 @@ import io.reactivex.Single;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
 public interface SurveyDao {
@@ -20,6 +21,7 @@ public interface SurveyDao {
     String GET_SURVEY_BY_ID = "/survey/get/{surveyId}";
     String GET_SURVEYS_FROM_NEIGHBOTHOOD = "/survey/getFromNeighborhood";
     String GET_NOT_ANSWERED = "/survey/getNotAnswered";
+    String GET_USER_SURVEYS = "/survey/getUserSurveys";
 
 
     @POST(ADD_NEW_SURVEY)
@@ -29,16 +31,18 @@ public interface SurveyDao {
     Single<Response<Categories>> getCategories();
 
     @GET(GET_MOST_POPULAR)
-    Single<Response<BaseResponse>> getMostPopularSurveys();
+    Single<Response<SurveysResponse>> getMostPopularSurveys();
 
-    @GET(GET_ALL_ACTIVE_SURVEYS)
+    @GET(GET_USER_SURVEYS)
     Single<Response<SurveysResponse>> getMySurveys();
 
-    @POST(GET_SURVEYS_FROM_NEIGHBOTHOOD)
+    @PATCH(GET_SURVEYS_FROM_NEIGHBOTHOOD)
     Single<Response<SurveysResponse>> getSurveysFromNeighborhood(@Body NeightborhoodRequest neightborhoodRequest);
 
     @GET(GET_NOT_ANSWERED)
     Single<Response<SurveysResponse>> getNotAnswered();
+    @GET(GET_ALL_ACTIVE_SURVEYS)
+    Single<Response<SurveysResponse>> getAll();
 
 
 }

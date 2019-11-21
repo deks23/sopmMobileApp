@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.project.sopmmobileapp.view.fragments.pager.AllSurveysFragment;
 import com.project.sopmmobileapp.view.fragments.pager.MySurveysFragment;
@@ -13,7 +14,7 @@ import com.project.sopmmobileapp.view.fragments.pager.SurveysInAreaFragment;
 import java.util.Arrays;
 import java.util.List;
 
-public class AdapterTabsPager extends FragmentPagerAdapter {
+public class AdapterTabsPager extends FragmentStatePagerAdapter {
 
     private  List<String> titles;
 
@@ -49,4 +50,10 @@ public class AdapterTabsPager extends FragmentPagerAdapter {
     public int getCount() {
         return titles.size();
     }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
 }

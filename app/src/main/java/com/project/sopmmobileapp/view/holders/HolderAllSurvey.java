@@ -14,17 +14,20 @@ public class HolderAllSurvey extends RecyclerView.ViewHolder {
     private TextView question;
     private TextView category;
     private TextView state;
+    private TextView voters;
 
     public HolderAllSurvey(@NonNull View itemView) {
         super(itemView);
         question = itemView.findViewById(R.id.question);
         category = itemView.findViewById(R.id.category);
         state = itemView.findViewById(R.id.state);
+        voters = itemView.findViewById(R.id.votersv);
     }
 
     public void setFields(SurveyResponse surveyResponse) {
         question.setText(surveyResponse.getQuestion());
         category.setText(surveyResponse.getCategory().getCategoryName());
         state.setText(surveyResponse.getState());
+        voters.setText(String.valueOf(surveyResponse.getAnswers().size()));
     }
 }

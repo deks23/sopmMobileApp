@@ -2,11 +2,14 @@ package com.project.sopmmobileapp.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 @AllArgsConstructor
 @ToString
+@Parcel
 public class Category {
 
 

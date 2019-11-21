@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.sopmmobileapp.R;
+import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.dtos.OptionItemDto;
 import com.project.sopmmobileapp.view.holders.HolderOption;
 
@@ -17,9 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import icepick.Icepick;
+import icepick.State;
+
 public class AdapterOptions extends RecyclerView.Adapter<HolderOption> {
 
-    private List<OptionItemDto> options;
+    List<OptionItemDto> options = new ArrayList<>();
     private Context context;
 
     private View view;
@@ -69,7 +73,9 @@ public class AdapterOptions extends RecyclerView.Adapter<HolderOption> {
     }
 
     public void addOption() {
-        options.add(new OptionItemDto(""));
+        if(options.size() <= 4) {
+            options.add(new OptionItemDto(""));
+        }
         super.notifyDataSetChanged();
     }
 

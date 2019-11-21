@@ -93,8 +93,55 @@ public class SurveyClient extends BaseClient {
                         Log.i("GetNeighborhoodError", authenticationResponse.toString());
                         return error(new BadRequestException());
                     }
+                    if(authenticationResponse.code() == HttpURLConnection.HTTP_INTERNAL_ERROR){
+                        Log.i("GetNeighborhoodCriticalError", "None response from server");
+                        return error(new RuntimeException("None response from server"));
+                    }
+                        Log.i("GetNeighborhoodCriticalError", authenticationResponse.toString());
+                        return error(new RuntimeException(Objects.requireNonNull(authenticationResponse.errorBody()).toString()));
+
+                }));
+    }
+
+    public Single<SurveysResponse> getMostPopular() {
+        return async(this.surveyDao.getMostPopularSurveys()
+                .flatMap(authenticationResponse -> {
+                    if (authenticationResponse.isSuccessful()) {
+                        Log.i("GetNeighborhood", authenticationResponse.toString());
+                        return just(Objects.requireNonNull(authenticationResponse.body()));
+                    }
+                    if (authenticationResponse.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.i("GetNeighborhoodError", authenticationResponse.toString());
+                        return error(new BadRequestException());
+                    }
+                    if(authenticationResponse.code() == HttpURLConnection.HTTP_INTERNAL_ERROR){
+                        Log.i("GetNeighborhoodCriticalError", "None response from server");
+                        return error(new RuntimeException("None response from server"));
+                    }
                     Log.i("GetNeighborhoodCriticalError", authenticationResponse.toString());
                     return error(new RuntimeException(Objects.requireNonNull(authenticationResponse.errorBody()).toString()));
+
+                }));
+    }
+
+    public Single<SurveysResponse> getAll() {
+        return async(this.surveyDao.getAll()
+                .flatMap(authenticationResponse -> {
+                    if (authenticationResponse.isSuccessful()) {
+                        Log.i("GetNeighborhood", authenticationResponse.toString());
+                        return just(Objects.requireNonNull(authenticationResponse.body()));
+                    }
+                    if (authenticationResponse.code() == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                        Log.i("GetNeighborhoodError", authenticationResponse.toString());
+                        return error(new BadRequestException());
+                    }
+                    if(authenticationResponse.code() == HttpURLConnection.HTTP_INTERNAL_ERROR){
+                        Log.i("GetNeighborhoodCriticalError", "None response from server");
+                        return error(new RuntimeException("None response from server"));
+                    }
+                    Log.i("GetNeighborhoodCriticalError", authenticationResponse.toString());
+                    return error(new RuntimeException(Objects.requireNonNull(authenticationResponse.errorBody()).toString()));
+
                 }));
     }
 }

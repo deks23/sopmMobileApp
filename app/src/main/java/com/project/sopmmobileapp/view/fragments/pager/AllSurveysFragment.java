@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,9 +30,6 @@ public class AllSurveysFragment extends Fragment implements BackWithLogOutDialog
 
     private AdapterAllSurveysListItem adapterAllSurveysListItem;
 
-    @Inject
-    SurveyClient surveyClient;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -43,9 +41,9 @@ public class AllSurveysFragment extends Fragment implements BackWithLogOutDialog
         recycler.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(layoutManager);
-        VoteApplication.getClientsComponent().inject(this);
-        adapterAllSurveysListItem = new AdapterAllSurveysListItem(getContext(),surveyClient);
+        adapterAllSurveysListItem = new AdapterAllSurveysListItem(getContext());
         recycler.setAdapter(adapterAllSurveysListItem);
+
 
         return mainView;
     }

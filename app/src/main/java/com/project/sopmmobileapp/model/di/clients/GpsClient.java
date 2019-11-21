@@ -21,4 +21,8 @@ public class GpsClient {
     public Optional<Location> getOptionalLocation() {
         return Optional.ofNullable(gpsListener.getLocation());
     }
+
+    public void init(){
+        gpsListener.init();
+    }
 }

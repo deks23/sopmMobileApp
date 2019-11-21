@@ -52,87 +52,91 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/category_label"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_weight="2"
                         android:text="@string/category_label"
                         android:textAlignment="center" />
 
-                    <Spinner
-                        android:id="@+id/category_spinner"
+                    <TextView
+                        android:id="@+id/category_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_weight="2"
-                        android:entries="@array/categories"
-                        android:gravity="center_horizontal"
-                        android:spinnerMode="dropdown" />
+                        android:text="TextView"
+                        android:textAlignment="center" />
+
                 </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:hint="@string/enter_question">
+                    android:layout_height="match_parent"
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/create_at_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={survey.question}"
-                        android:textSize="18sp" />
+                        android:layout_weight="2"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:text="@string/created_at_label" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/finish_date_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_margin="5dp"
+                        android:textAlignment="center"
+                        android:text="@string/finished_at_label" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/finishDatePickerButton"
+                    <TextView
+                        android:id="@+id/create_at_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:layout_weight="2"
-                        android:text="@string/set_finish_date" />
+                        android:layout_margin="5dp"
+                        android:textAlignment="center" />
 
                     <TextView
                         android:id="@+id/finish_date_value"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:layout_weight="2"
                         android:gravity="center"
                         android:textAlignment="center" />
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/question"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textAlignment="center" />
 
-                    <Button
-                        android:id="@+id/add_option_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="2"
-                        android:text="@string/add_option" />
-
-                    <Button
-                        android:id="@+id/remove_option_bt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="2"
-                        android:text="@string/remove_last_option" />
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/vote_information"
+                    android:textAlignment="center" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/options_recycler_view"
+                    android:id="@+id/options_vote_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -149,13 +153,6 @@
                         android:layout_weight="2"
                         android:text="@string/cancel" />
 
-                    <Button
-                        android:id="@+id/create_survey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="2"
-                        android:text="@string/create_survey" />
                 </LinearLayout>
 
 

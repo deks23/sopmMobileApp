@@ -25,7 +25,7 @@ public class GpsListener implements LocationListener {
     private Activity activity;
     private Location location;
     private static final int LOCATION_REFRESH_TIME_MSEC = 5000;
-    private static final int LOCATION_REFRESH_DISTANCE_METERS = 10;
+    private static final int LOCATION_REFRESH_DISTANCE_METERS = 1;
     private static final int REQUEST_CODE = 123;
     private String TAG = this.getClass().getName();
 
@@ -38,7 +38,7 @@ public class GpsListener implements LocationListener {
         init();
     }
 
-    private void init() {
+    public void init() {
         String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
         if (ContextCompat.checkSelfPermission(context, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.e(TAG, "GPS permission not granted");

@@ -1,15 +1,29 @@
 package com.project.sopmmobileapp.view.activities;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.project.sopmmobileapp.R;
+import com.project.sopmmobileapp.model.exceptions.GpsException;
+import com.project.sopmmobileapp.model.service.LocationService;
 import com.project.sopmmobileapp.view.dialogs.AlertDialogsFactory;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
 import com.project.sopmmobileapp.view.fragments.Iback.BackWithExitDialog;
@@ -49,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             this.currentFragment = new LoginFragment();
             this.setBaseForBackStack(this.currentFragment, TAG);
         }
-        this.setSdkPolicy();
         instance = this;
     }
 
