@@ -8,7 +8,6 @@ import org.parceler.Parcel;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.Synchronized;
 
 
 @NoArgsConstructor

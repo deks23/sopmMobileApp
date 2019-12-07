@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.tasks.Task;
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.applications.VoteApplication;
 import com.project.sopmmobileapp.databinding.CreateSurveyFragmentBinding;
@@ -45,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -113,7 +109,7 @@ public class CreateSurveyFragment extends Fragment implements BackWithRemoveFrom
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapterOptions = new AdapterOptions(getContext(),options);
+        adapterOptions = new AdapterOptions(getContext(), options);
         recyclerView.setAdapter(adapterOptions);
         return mainView;
     }
@@ -132,13 +128,13 @@ public class CreateSurveyFragment extends Fragment implements BackWithRemoveFrom
     @OnClick(R.id.add_option_bt)
     public void addOption() {
         adapterOptions.addOption();
-        options =  adapterOptions.getOptionsItems();
+        options = adapterOptions.getOptionsItems();
     }
 
     @OnClick(R.id.remove_option_bt)
     public void removeOption() {
         adapterOptions.removeOption();
-        options =  adapterOptions.getOptionsItems();
+        options = adapterOptions.getOptionsItems();
     }
 
     @OnClick(R.id.create_survey)
