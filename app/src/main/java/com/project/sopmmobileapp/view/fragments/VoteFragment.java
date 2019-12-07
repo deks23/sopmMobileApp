@@ -71,7 +71,7 @@ public class VoteFragment extends Fragment implements BackWithRemoveFromStack {
         this.surveyResponse = surveyResponse;
     }
 
-    public void setSurveyResponse(SurveyResponse surveyResponse){
+    public void setSurveyResponse(SurveyResponse surveyResponse) {
         this.surveyResponse = surveyResponse;
     }
 

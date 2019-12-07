@@ -96,4 +96,8 @@ dependencies {
 
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
     implementation 'joda-time:joda-time:2.10.5'
+
+    //ANY CHARTS
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+    implementation 'com.fasterxml.jackson.core:com.springsource.com.fasterxml.jackson.core.jackson-annotations:2.0.2'
 }

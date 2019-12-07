@@ -9,6 +9,7 @@ import com.project.sopmmobileapp.view.adapters.AdapterMySurveyListItem;
 import com.project.sopmmobileapp.view.fragments.CreateSurveyFragment;
 import com.project.sopmmobileapp.view.fragments.LoginFragment;
 import com.project.sopmmobileapp.view.fragments.RegisterFragment;
+import com.project.sopmmobileapp.view.fragments.StatsFragment;
 import com.project.sopmmobileapp.view.fragments.UserDetailsFragment;
 import com.project.sopmmobileapp.view.fragments.VoteFragment;
 import com.project.sopmmobileapp.view.fragments.pager.AllSurveysFragment;
@@ -46,4 +47,6 @@ public interface ClientsComponent {
     void inject(HolderClickOption holderClickOption);
 
     void inject(AdapterInAreaSurveysListItem adapterInAreaSurveysListItem);
+
+    void inject(StatsFragment statsFragment);
 }

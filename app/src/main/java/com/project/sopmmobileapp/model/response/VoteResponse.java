@@ -2,32 +2,28 @@ package com.project.sopmmobileapp.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
-
-import org.joda.time.LocalDateTime;
 import org.parceler.Parcel;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Parcel
-public class OptionResponse {
+public class VoteResponse {
 
     @SerializedName("id")
-    private Long id;
+    Long voteId;
 
-    @SerializedName("value")
-    private String value;
-
-    @SerializedName("createDate")
-    private LocalDateTime createDate;
-
-    @SerializedName("result")
-    private String result;
+    @SerializedName("numberOfVotes")
+    Long numberOfVotes;
 
 }

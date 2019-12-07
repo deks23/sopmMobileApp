@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.ToString;
 
 @AllArgsConstructor
-@ToString
 @Parcel
+@ToString
 public class Category {
 
 
