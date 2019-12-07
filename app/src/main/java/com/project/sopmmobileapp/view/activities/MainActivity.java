@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         if (currentFragment.isVisible()) {
             ft.detach(currentFragment);
         }
+
         if (fragment.isAdded()) {
             ft.show(fragment);
         } else {

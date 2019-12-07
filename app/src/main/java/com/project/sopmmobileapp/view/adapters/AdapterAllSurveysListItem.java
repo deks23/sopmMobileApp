@@ -72,7 +72,7 @@ public class AdapterAllSurveysListItem extends RecyclerView.Adapter<HolderAllSur
 
 
     public void getSurveys() {
-        Disposable disposable = surveyClient.getAll()
+        Disposable disposable = surveyClient.getNotAnswered()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateSurveys, e -> Log.e(FragmentTags.MainViewPagerFragment, e.getMessage(), e));
