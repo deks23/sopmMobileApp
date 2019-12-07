@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static final String TAG = MainActivity.class.getName();
-    private static final String CURRENT_FRAGMENT_TAG = "currentFragment";
+    private static String CURRENT_FRAGMENT_TAG = "currentFragment";
 
 
     public static MainActivity instance = null;
@@ -79,8 +79,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void popBackStack() {
-        super.getSupportFragmentManager().popBackStack();
-        updateCurrentFragment();
+        try {
+            super.getSupportFragmentManager().popBackStackImmediate();
+            updateCurrentFragment();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean canBack() {
@@ -102,29 +106,34 @@ public class MainActivity extends AppCompatActivity {
         while (super.getSupportFragmentManager().popBackStackImmediate()) ;
     }
 
-    public void changeFragment(final Fragment fragment) {
+    public void changeFragment(final Fragment fragment, final String TAG) {
         super.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.layout_on_fragments, fragment)
-                .addToBackStack(currentFragment.getClass().toString())
+                .addToBackStack(TAG)
                 .commit();
     }
 
     public void putFragment(final Fragment fragment, final String TAG) {
-        FragmentTransaction ft = super.getSupportFragmentManager().beginTransaction();
-        if (currentFragment.isVisible()) {
-            ft.detach(currentFragment);
-        }
+        try {
+            FragmentTransaction ft = super.getSupportFragmentManager().beginTransaction();
+            if (currentFragment.isVisible()) {
+                ft.detach(currentFragment);
+            }
 
-        if (fragment.isAdded()) {
-            ft.show(fragment);
-        } else {
-            ft.add(R.id.layout_on_fragments, fragment, TAG);
-            ft.addToBackStack(TAG);
-            ft.commit();
+            if (fragment.isAdded()) {
+                ft.show(fragment);
+            } else {
+                ft.add(R.id.layout_on_fragments, fragment, TAG);
+                ft.addToBackStack(TAG);
+                ft.commit();
+            }
+            updateCurrentFragment();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
-        updateCurrentFragment();
     }
+
 
     @Override
     public void onResume() {

@@ -2,6 +2,7 @@ package com.project.sopmmobileapp.model.di.components;
 
 import com.project.sopmmobileapp.model.di.clients.LoginClient;
 import com.project.sopmmobileapp.model.di.clients.RegisterClient;
+import com.project.sopmmobileapp.model.di.clients.StatsClient;
 import com.project.sopmmobileapp.model.di.clients.SurveyClient;
 import com.project.sopmmobileapp.model.di.clients.UserDetailsClient;
 import com.project.sopmmobileapp.model.di.clients.VoteClient;
@@ -24,4 +25,6 @@ public interface RetrofitComponent {
     void inject(SurveyClient surveyClient);
 
     void inject(VoteClient voteClient);
+
+    void inject(StatsClient statsClient);
 }

@@ -102,9 +102,7 @@ public class AdapterInAreaSurveysListItem extends RecyclerView.Adapter<HolderAll
             neightborhoodRequest.setLongitude(location.getLongitude());
             neightborhoodRequest.setLatitude(location.getLatitude());
         }
-        Disposable disposable = surveyClient.getMostPopular()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        Disposable disposable = surveyClient.getSurveysFromNeighborhood(neightborhoodRequest)
                 .subscribe(this::updateSurveys, e -> Log.e(FragmentTags.MainViewPagerFragment, e.getMessage(), e));
         compositeDisposable.add(disposable);
     }

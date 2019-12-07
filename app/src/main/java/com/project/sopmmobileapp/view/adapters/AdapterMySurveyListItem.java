@@ -16,6 +16,7 @@ import com.project.sopmmobileapp.model.response.SurveyResponse;
 import com.project.sopmmobileapp.model.response.SurveysResponse;
 import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
+import com.project.sopmmobileapp.view.fragments.StatsFragment;
 import com.project.sopmmobileapp.view.fragments.SurveyFragment;
 import com.project.sopmmobileapp.view.holders.HolderMySurveyView;
 
@@ -65,9 +66,6 @@ public class AdapterMySurveyListItem extends RecyclerView.Adapter<HolderMySurvey
         return surveysResponse.size();
     }
 
-    public void onDestroy() {
-        compositeDisposable.dispose();
-    }
 
     public void addSurvey(SurveyResponse surveyResponse) {
         surveysResponse.add(surveyResponse);
@@ -77,8 +75,6 @@ public class AdapterMySurveyListItem extends RecyclerView.Adapter<HolderMySurvey
     private void getMySurveys() {
 
         Disposable disposable = surveyClient.getMySurveys()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateSurveys, e -> Log.e(FragmentTags.MainViewPagerFragment, e.getMessage(), e));
         compositeDisposable.add(disposable);
     }
@@ -89,14 +85,9 @@ public class AdapterMySurveyListItem extends RecyclerView.Adapter<HolderMySurvey
     }
 
     private void setActionOnClicStatistics( SurveyResponse surveyResponse){
-
-    }
-
-    private void setActionOnClickSurvey(SurveyResponse detailsSurvey) {
         this.view.setOnClickListener((view) -> {
-            SurveyFragment fragment = new SurveyFragment(detailsSurvey);
-            ((MainActivity) this.context).putFragment(fragment, FragmentTags.SurveyFragment);
+            StatsFragment fragment = new StatsFragment(context,surveyResponse);
+            ((MainActivity) this.context).changeFragment(fragment, FragmentTags.StatsFragment);
         });
-
     }
 }

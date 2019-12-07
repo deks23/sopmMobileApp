@@ -7,22 +7,20 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Synchronized;
+import retrofit2.http.GET;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Parcel
-public class OptionItemDto extends BaseObservable {
+@Getter
+@Setter
+public class OptionItemDto {
 
     @SerializedName("option")
     private String option;
 
-    public String getOption() {
-        return option;
-    }
-
-    public void setOption(String option) {
-        this.option = option;
-    }
 }

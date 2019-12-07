@@ -3,6 +3,7 @@ package com.project.sopmmobileapp.model.di.modules;
 import com.project.sopmmobileapp.model.di.clients.GpsClient;
 import com.project.sopmmobileapp.model.di.clients.LoginClient;
 import com.project.sopmmobileapp.model.di.clients.RegisterClient;
+import com.project.sopmmobileapp.model.di.clients.StatsClient;
 import com.project.sopmmobileapp.model.di.clients.SurveyClient;
 import com.project.sopmmobileapp.model.di.clients.UserDetailsClient;
 import com.project.sopmmobileapp.model.di.clients.VoteClient;
@@ -55,5 +56,9 @@ public class ClientsModule {
     @Singleton
     @Provides
     public LocationService locationService() { return new LocationService(); }
+
+    @Singleton
+    @Provides
+    public StatsClient statsClient() { return new StatsClient(); }
 
 }
