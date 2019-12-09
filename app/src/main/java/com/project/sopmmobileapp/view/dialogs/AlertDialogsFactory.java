@@ -50,6 +50,8 @@ public class AlertDialogsFactory {
                 .setMessage("Are you sure, You want cancel this operations?")
                 .setPositiveButton("Yes", (arg0, arg1) -> {
                     ((MainActivity) Objects.
+                            requireNonNull(activity)).popBackStack();
+                    ((MainActivity) Objects.
                             requireNonNull(activity)).setBaseForBackStack(new MainViewPagerFragment(),
                             FragmentTags.MainViewPagerFragment);
                 })

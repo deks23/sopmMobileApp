@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void popBackStack() {
+    public void popBackStack() {
         try {
             super.getSupportFragmentManager().popBackStackImmediate();
             updateCurrentFragment();
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             if (fragment.isAdded()) {
                 ft.show(fragment);
             } else {
-                ft.add(R.id.layout_on_fragments, fragment, TAG);
+                ft.replace(R.id.layout_on_fragments, fragment, TAG);
                 ft.addToBackStack(TAG);
                 ft.commit();
             }

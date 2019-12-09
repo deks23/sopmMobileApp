@@ -64,8 +64,8 @@ public class GpsListener implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         this.location = location;
-        Toast.makeText(context.getApplicationContext(), location.getLatitude() + " " + location.getLongitude(),
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context.getApplicationContext(), location.getLatitude() + " " + location.getLongitude(),
+//                Toast.LENGTH_SHORT).show();
     }
 
     @Override

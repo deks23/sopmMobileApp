@@ -16,17 +16,13 @@ import com.project.sopmmobileapp.model.response.SurveyResponse;
 import com.project.sopmmobileapp.model.response.SurveysResponse;
 import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
-import com.project.sopmmobileapp.view.fragments.SurveyFragment;
 import com.project.sopmmobileapp.view.fragments.VoteFragment;
 import com.project.sopmmobileapp.view.holders.HolderAllSurvey;
-import com.project.sopmmobileapp.view.holders.HolderMySurveyView;
 
 import javax.inject.Inject;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class AdapterAllSurveysListItem extends RecyclerView.Adapter<HolderAllSurvey> {
 

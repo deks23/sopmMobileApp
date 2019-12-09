@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -141,17 +142,15 @@ public class CreateSurveyFragment extends Fragment implements BackWithRemoveFrom
     public void addSurvey() {
         //TODO VALIDATION ON { data only from future, not empty fields, question must have ?,
         // Survey have to min 2 options
-//        Location locationTask = gpsClient.getOptionalLocation().get();
-//        locationTask.addOnSuccessListener(Objects.requireNonNull(getActivity()), location -> {
-//                    if (location != null) {
-//                        mLocation = location;
-//                    }
-//                });
+        Optional<Location> optionalLocation = gpsClient.getOptionalLocation();
+        optionalLocation.ifPresent(location -> mLocation = location);
+
 
 
         createSurvey.setAnswerOptions(adapterOptions.getOptions());
         createSurvey.setCategory(categorySpinner.getSelectedItemPosition() + 1);
         createSurvey.setFinishTime(LocalDateTime.parse(mYear + "-" + mMonth + "-" + mDay).withYear(mYear));
+
         if (mLocation != null) {
             createSurvey.setLatitude(mLocation.getLatitude());
             createSurvey.setLongitude(mLocation.getLongitude());
@@ -161,14 +160,14 @@ public class CreateSurveyFragment extends Fragment implements BackWithRemoveFrom
             createSurvey.setLatitude(51.747164);
             createSurvey.setLongitude(19.455942);
         }
-
+        Log.i(FragmentTags.SurveyFragment, createSurvey.toString());
         Disposable disposable = this.surveyClient.addSurvey(this.createSurvey)
                 .subscribe((BaseResponse authenticationResponse) -> {
                     Log.i(FragmentTags.CreateSurveyFragment, "CreateSurvey sent");
                     if (authenticationResponse.isStatus()) {
                         ((MainActivity) Objects.
                                 requireNonNull(getActivity()))
-                                .putFragment(new MainViewPagerFragment(),
+                                .setBaseForBackStack(new MainViewPagerFragment(),
                                         FragmentTags.MainViewPagerFragment);
                     }
                 }, (Throwable e) -> {
@@ -182,8 +181,7 @@ public class CreateSurveyFragment extends Fragment implements BackWithRemoveFrom
 
     @OnClick(R.id.cancel_bt)
     public void cancel() {
-        ((MainActivity) Objects.
-                requireNonNull(getActivity())).onBackPressed();
+        Objects.requireNonNull(getActivity()).onBackPressed();
     }
 
     private void updateDisplay() {

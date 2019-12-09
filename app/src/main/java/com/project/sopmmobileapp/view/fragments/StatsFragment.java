@@ -26,14 +26,11 @@ import com.project.sopmmobileapp.model.di.clients.StatsClient;
 import com.project.sopmmobileapp.model.response.StatResponse;
 import com.project.sopmmobileapp.model.response.StatsResponse;
 import com.project.sopmmobileapp.model.response.SurveyResponse;
-import com.project.sopmmobileapp.view.activities.MainActivity;
-import com.project.sopmmobileapp.view.fragments.pager.MainViewPagerFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -65,7 +62,7 @@ public class StatsFragment extends Fragment {
 
     private Context context;
 
-    public StatsFragment(){
+    public StatsFragment() {
         this.context = VoteApplication.getContext();
     }
 
@@ -87,7 +84,7 @@ public class StatsFragment extends Fragment {
         View mainView = statisticsFragmentBinding.getRoot();
         ButterKnife.bind(this, mainView);
         VoteApplication.getClientsComponent().inject(this);
-        if(statResponse == null) {
+        if (statResponse == null) {
             downloadData();
         }
         questionContent.setText(surveyResponse.getQuestion());

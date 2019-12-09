@@ -2,7 +2,6 @@ package com.project.sopmmobileapp.view.adapters;
 
 import android.content.Context;
 import android.location.Location;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.sopmmobileapp.R;
 import com.project.sopmmobileapp.applications.VoteApplication;
-import com.project.sopmmobileapp.model.bundlers.ABundler;
 import com.project.sopmmobileapp.model.di.clients.GpsClient;
 import com.project.sopmmobileapp.model.di.clients.SurveyClient;
 import com.project.sopmmobileapp.model.request.NeightborhoodRequest;
@@ -21,25 +19,16 @@ import com.project.sopmmobileapp.model.response.SurveyResponse;
 import com.project.sopmmobileapp.model.response.SurveysResponse;
 import com.project.sopmmobileapp.view.activities.MainActivity;
 import com.project.sopmmobileapp.view.fragments.FragmentTags;
-import com.project.sopmmobileapp.view.fragments.SurveyFragment;
 import com.project.sopmmobileapp.view.fragments.VoteFragment;
 import com.project.sopmmobileapp.view.holders.HolderAllSurvey;
-import com.project.sopmmobileapp.view.holders.HolderMySurveyView;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
 import java.util.Optional;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import icepick.Icepick;
-import icepick.State;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class AdapterInAreaSurveysListItem extends RecyclerView.Adapter<HolderAllSurvey> {
 
