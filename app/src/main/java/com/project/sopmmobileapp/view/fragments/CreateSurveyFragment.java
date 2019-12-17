@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -99,6 +100,8 @@ public class CreateSurveyFragment extends Fragment implements BackWithRemoveFrom
         CreateSurveyFragmentBinding createSurveyFragmentBinding = DataBindingUtil.inflate(inflater,
                 R.layout.create_survey_fragment, container, false);
 
+
+
         View mainView = createSurveyFragmentBinding.getRoot();
         createSurveyFragmentBinding.setSurvey(this.createSurvey);
         ButterKnife.bind(this, mainView);
@@ -113,6 +116,14 @@ public class CreateSurveyFragment extends Fragment implements BackWithRemoveFrom
         adapterOptions = new AdapterOptions(getContext(), options);
         recyclerView.setAdapter(adapterOptions);
         return mainView;
+    }
+
+    private boolean checkData() {
+        LocalDateTime finishTime = createSurvey.getFinishTime();
+        LocalDateTime nowTime = LocalDateTime.now();
+        boolean checkFinishTime = nowTime.isBefore(finishTime);
+
+        return checkFinishTime;
     }
 
     @Override
@@ -160,23 +171,24 @@ public class CreateSurveyFragment extends Fragment implements BackWithRemoveFrom
             createSurvey.setLatitude(51.747164);
             createSurvey.setLongitude(19.455942);
         }
-        Log.i(FragmentTags.SurveyFragment, createSurvey.toString());
-        Disposable disposable = this.surveyClient.addSurvey(this.createSurvey)
-                .subscribe((BaseResponse authenticationResponse) -> {
-                    Log.i(FragmentTags.CreateSurveyFragment, "CreateSurvey sent");
-                    if (authenticationResponse.isStatus()) {
-                        ((MainActivity) Objects.
-                                requireNonNull(getActivity()))
-                                .setBaseForBackStack(new MainViewPagerFragment(),
-                                        FragmentTags.MainViewPagerFragment);
-                    }
-                }, (Throwable e) -> {
-                    if (e instanceof BadRequestException) {
-                        Log.i(FragmentTags.CreateSurveyFragment, "CreateSurveyException", e);
-                        this.errorMessage.setText(getString(R.string.server_error));
-                    }
-                });
-
+        if(checkData()) {
+            Log.i(FragmentTags.SurveyFragment, createSurvey.toString());
+            Disposable disposable = this.surveyClient.addSurvey(this.createSurvey)
+                    .subscribe((BaseResponse authenticationResponse) -> {
+                        Log.i(FragmentTags.CreateSurveyFragment, "CreateSurvey sent");
+                        if (authenticationResponse.isStatus()) {
+                            ((MainActivity) Objects.
+                                    requireNonNull(getActivity()))
+                                    .setBaseForBackStack(new MainViewPagerFragment(),
+                                            FragmentTags.MainViewPagerFragment);
+                        }
+                    }, (Throwable e) -> {
+                        if (e instanceof BadRequestException) {
+                            Log.i(FragmentTags.CreateSurveyFragment, "CreateSurveyException", e);
+                            this.errorMessage.setText(getString(R.string.server_error));
+                        }
+                    });
+        }
     }
 
     @OnClick(R.id.cancel_bt)
