@@ -19,6 +19,8 @@ public class PasswordValidator {
         Set<Boolean> validateSet = new HashSet<>();
         validateSet.add(checkIsEmptyFields(username, password, repeatPassword));
         validateSet.add(checkIsNotTheSamePasswords(password, repeatPassword));
+        validateSet.add(checkSpaceInUsername(username));
+        validateSet.add(checkRightPasswordPassword(password));
         return !validateSet.contains(true);
     }
 
@@ -57,6 +59,28 @@ public class PasswordValidator {
     private static boolean checkIsNotTheSamePasswords(String password, String repeatPassword) {
         if (!password.equals(repeatPassword)){
             errorMessageCode = R.string.uncorrect_password;
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean checkSpaceInUsername(String username) {
+        String[] usernameToValidate = username.split(" ");
+
+        if(usernameToValidate.length > 1) {
+            errorMessageCode = R.string.incorrect_username;
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean checkRightPasswordPassword(String password) {
+        if(password.length() < 8) {
+            errorMessageCode = R.string.to_short_password;
+            return true;
+        }
+        if(!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
+            errorMessageCode = R.string.validate_password;
             return true;
         }
         return false;

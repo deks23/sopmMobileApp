@@ -13,6 +13,9 @@
     <string name="go_to_login">login</string>
     <string name="go_to_registration">registration</string>
     <string name="uncorrect_password">passwords is not the same</string>
+    <string name="to_short_password">password should have minimum 8 signs</string>
+    <string name="validate_password">password should have lower, upper letters, numbers and special sign</string>
+    <string name="incorrect_username">username have space inside!</string>
     <string name="empty_fields">fields must not is blank</string>
     <string name="credentials_preferences">credentials_preferences</string>
     <string name="user_is_taken">User is taken</string>
