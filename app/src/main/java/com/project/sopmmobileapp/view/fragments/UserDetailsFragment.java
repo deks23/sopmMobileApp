@@ -102,8 +102,8 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
         userDetails.setGender(getResources().
                 getStringArray(R.array.gender_array)[spinner.getSelectedItemPosition()]);
         userDetails.setBirthday(new LocalDateTime().withYear(mYear)
-        .withMonthOfYear(mMonth)
-        .withDayOfMonth(mDay));
+                .withMonthOfYear(mMonth)
+                .withDayOfMonth(mDay));
         Log.i(FragmentTags.UserDetailsFragment, userDetails.toString());
         if (userDetails.getBirthday().isAfter(LocalDateTime.now())) {
             errorMessage.setText(R.string.birthday_error);
@@ -113,9 +113,11 @@ public class UserDetailsFragment extends Fragment implements BackWithLogOutDialo
                     Log.i(FragmentTags.UserDetailsFragment, "UserDetails sent");
                     if (authenticationResponse.isStatus()) {
                         ((MainActivity) Objects.
+                                requireNonNull(getActivity())).clearBackStack();
+                        ((MainActivity) Objects.
                                 requireNonNull(getActivity()))
-                                .putFragment(new MainViewPagerFragment(),
-                                        FragmentTags.MainViewPagerFragment);
+                                .setBaseForBackStack(new MainViewPagerFragment(),
+                                FragmentTags.MainViewPagerFragment);
                     }
                 }, (Throwable e) -> {
                     if (e instanceof BadRequestException) {
